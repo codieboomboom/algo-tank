@@ -6,6 +6,7 @@ typedef struct IntNode {
 } IntNode_t;
 
 void print_list(IntNode_t * head_ptr) {
+    // Time complexity: O(n) as need to iterate once through a list of n elements
     IntNode_t * curr_ptr = head_ptr;
     printf("List Nodes:");
     while (curr_ptr != NULL) {
@@ -22,19 +23,31 @@ IntNode_t* reverse_list(IntNode_t* head) {
 // TODO: Is it common to just rely on the head_ptr as per previous?
 
 void push_front(IntNode_t* head, int value) {
+    // O(1) time as no need to iterate
     return;
 }
 
 void push_back(IntNode_t* head, int value) {
+    // O(n) time
     return;
 }
 
 int pop_back(IntNode_t* head) {
+    // O(n) time
     return 0; // TODO
 }
 
 int pop_front(IntNode_t* head) {
+    // O(1) time
     return 0;
+}
+
+void deduplicate_list(IntNode_t* head) {
+    return;
+}
+
+IntNode_t* find_middle_node(IntNode_t* head) {
+    
 }
 
 int main() {
