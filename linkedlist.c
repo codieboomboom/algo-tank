@@ -32,16 +32,20 @@ void push_back(IntNode_t* head, int value) {
     return;
 }
 
-int pop_back(IntNode_t* head) {
+int pop_back(IntNode_t** head) {
+    // The double pointer is used instead of single pointer because for single pointer
+    // the local copy of it does not propagate outside of this function
     // O(n) time
-    IntNode_t* curr = head;
+    IntNode_t* curr = *head;
     IntNode_t* prev = NULL;
-    if (!head) return -1; // ERROR
-    if (head && !head->next) {
-        int val = head->val;
-        head = NULL;
-        return val;
+    if (!head || !curr) return -1; // ERROR: the head ptr should not be NULL and ptr to head ptr too shall not be null
+
+    if (curr && !curr->next) {
+        // Only 1 element
+        *head = NULL;
+        return curr->val;
     }
+
     // Keep moving until curr is the last node
     while (curr->next) {
         prev = curr;
@@ -72,22 +76,31 @@ int main() {
     node.next = &node2;
     node2.next = &node3;
     node3.next = &node4;
+    // First LL
     IntNode_t *head = &node;
     print_list(head);
+    // Second LL
+    IntNode_t* head2 = &node4;
+    print_list(head2);
+    // LL that is null
+    IntNode_t* head3 = NULL;
+    print_list(head3);
 
     IntNode_t * reversed = reverse_list(head);
     print_list(reversed);
 
-    int popped = pop_back(head);
+    int popped = pop_back(&head);
     print_list(head);
     printf("%d\n", popped);
 
-    int popped_again = pop_back(NULL);
-    print_list(NULL);
-    printf("%d\n", popped_again);
-
-    // Segfault if pop &node4
-    int poppidity_popped_again = pop_back(&node3);
-    print_list(&node3);
+    printf("\n\n");
+    print_list(head2);
+    int poppidity_popped_again = pop_back(&head2);
+    print_list(head2);
     printf("%d\n", poppidity_popped_again);
+
+    printf("\n\n");
+    int popped_again = pop_back(&head3); // why cannot pop_back(NULL)? In fact does NULL address means anything?
+    print_list(head3);
+    printf("%d\n", popped_again);
 }
