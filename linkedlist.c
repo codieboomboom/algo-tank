@@ -36,9 +36,10 @@ int pop_back(IntNode_t** head) {
     // The double pointer is used instead of single pointer because for single pointer
     // the local copy of it does not propagate outside of this function
     // O(n) time
+    if (!head || !(*head)) return -1; // ERROR: the head ptr should not be NULL and ptr to head ptr too shall not be null
+    
     IntNode_t* curr = *head;
     IntNode_t* prev = NULL;
-    if (!head || !curr) return -1; // ERROR: the head ptr should not be NULL and ptr to head ptr too shall not be null
 
     if (curr && !curr->next) {
         // Only 1 element
@@ -103,4 +104,8 @@ int main() {
     int popped_again = pop_back(&head3); // why cannot pop_back(NULL)? In fact does NULL address means anything?
     print_list(head3);
     printf("%d\n", popped_again);
+
+    printf("\n\n");
+    int popped_again_NULL = pop_back(NULL);
+    printf("%d\n", popped_again_NULL);
 }
