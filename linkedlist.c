@@ -17,7 +17,29 @@ void print_list(IntNode_t * head_ptr) {
 }
 
 IntNode_t* reverse_list(IntNode_t* head) {
-    return NULL;
+    if (!head || !(head->next)) {
+        // NULL ptr passed in or single node only
+        // No work to be done
+        return head;
+    }
+
+    // Otherwise
+    IntNode_t* curr = head;
+    IntNode_t* prev = NULL;
+    IntNode_t* next = NULL;
+
+    while(curr) {
+        // Save the current's next node first
+        next = curr->next;
+        // The current's next node should point to previous node (to reverse)
+        curr->next = prev;
+        // Move the prev node on to curr node as well
+        prev = curr;
+        // Move on (fwd direction)
+        curr = next;
+    }
+
+    return prev; // as curr would now be NULL
 }
 
 // TODO: Is it common to just rely on the head_ptr as per previous?
