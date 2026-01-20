@@ -59,7 +59,7 @@ int pop_back(IntNode_t** head) {
     // the local copy of it does not propagate outside of this function
     // O(n) time
     if (!head || !(*head)) return -1; // ERROR: the head ptr should not be NULL and ptr to head ptr too shall not be null
-    
+
     IntNode_t* curr = *head;
     IntNode_t* prev = NULL;
 
@@ -78,9 +78,15 @@ int pop_back(IntNode_t** head) {
     return curr->val;
 }
 
-int pop_front(IntNode_t* head) {
+int pop_front(IntNode_t** head) {
     // O(1) time
-    return 0;
+    if (!head || !(*head)) return -1; // error if you supplement a null ptr or a ptr to null (cannot pop empty)
+
+    IntNode_t* curr = *head;
+    (*head) = curr->next; // the *head is a ptr to the next node or NULL (for single linkedlist) after pop
+    // and we return the current node value now
+
+    return curr->val;
 }
 
 void deduplicate_list(IntNode_t* head) {
@@ -112,6 +118,7 @@ int main() {
     IntNode_t * reversed = reverse_list(head);
     print_list(reversed);
 
+    printf("=====POP BACK TEST===============\n");
     int popped = pop_back(&head);
     print_list(head);
     printf("%d\n", popped);
@@ -130,4 +137,25 @@ int main() {
     printf("\n\n");
     int popped_again_NULL = pop_back(NULL);
     printf("%d\n", popped_again_NULL);
+
+    printf("========POP FRONT TEST============\n");
+    printf("POP NULL: \n");
+    int pop_null = pop_front(NULL);
+    printf("%d\n", pop_null);
+    printf("POP PTR to NULL\n");
+    IntNode_t * ptr_to_null = NULL;
+    int pop_null2 = pop_front(NULL);
+    printf("%d\n", pop_null2);
+    printf("POP SINGLE NODE LIST\n");
+    IntNode_t node_single = {20, NULL};
+    IntNode_t *head_single = &node_single;
+    print_list(head_single);
+    int pop_single_front = pop_front(&head_single);
+    printf("%d\n", pop_single_front);
+    print_list(head_single);
+    printf("POP A NORMAL LIST\n");
+    print_list(head2);
+    int pop_front_head = pop_front(&head2);
+    printf("%d\n", pop_front_head);
+    print_list(head2);
 }
