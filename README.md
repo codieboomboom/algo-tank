@@ -1,0 +1,2 @@
+# TANKING ALGORITHM
+A "tank" where my exploration of algorithm and datastructures are stored for reflections and learning. Language of choice is C because it is painful to learn and implement things in C programming
