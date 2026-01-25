@@ -44,8 +44,14 @@ IntNode_t* reverse_list(IntNode_t* head) {
 
 // TODO: Is it common to just rely on the head_ptr as per previous?
 
-void push_front(IntNode_t* head, int value) {
+void push_front(IntNode_t** head, int value) {
     // O(1) time as no need to iterate
+    // Does not make sense to have a nullptr for the ptr to headptr, considered as error
+    if (!head) return -1;
+    IntNode_t* next = *head; // safe now
+    // Create a new node with the value
+    IntNode_t to_inserted_node = {value, next};
+    *head = &to_inserted_node; 
     return;
 }
 
