@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct IntNode {
     int val;
@@ -48,10 +49,11 @@ int push_front(IntNode_t** head, int value) {
     // O(1) time as no need to iterate
     // Does not make sense to have a nullptr for the ptr to headptr, considered as error
     if (!head) return -1;
-    IntNode_t* next = *head; // safe now
     // Create a new node with the value
-    IntNode_t to_inserted_node = {value, next};
-    *head = &to_inserted_node; 
+    IntNode_t* ptr_to_inserted_node = malloc(sizeof(IntNode_t));
+    ptr_to_inserted_node->val = value;
+    ptr_to_inserted_node->next = *head;
+    *head = ptr_to_inserted_node; 
     return 0;
 }
 
