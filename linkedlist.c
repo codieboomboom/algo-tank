@@ -51,6 +51,7 @@ int push_front(IntNode_t** head, int value) {
     if (!head) return -1;
     // Create a new node with the value
     IntNode_t* ptr_to_inserted_node = malloc(sizeof(IntNode_t));
+    if (!ptr_to_inserted_node) return -1; // failure if not able to allocate more
     ptr_to_inserted_node->val = value;
     ptr_to_inserted_node->next = *head;
     *head = ptr_to_inserted_node; 
