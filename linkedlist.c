@@ -58,9 +58,31 @@ int push_front(IntNode_t** head, int value) {
     return 0;
 }
 
-void push_back(IntNode_t* head, int value) {
-    // O(n) time
-    return;
+int push_back(IntNode_t** head, int value) {
+    // Throw error because should at least have ptr to head
+    if (!head) return -1;
+    // If list is empty, simply push and return
+    if (!(*head)) {
+        IntNode_t* first_node = malloc(sizeof(IntNode_t));
+        if (!first_node) return -1;
+        first_node->val = value;
+        first_node->next = NULL;
+        *head = first_node;
+        return 0;
+    }
+    // Otherwise: iterate till the end O(n) in worst case
+    IntNode_t* curr = *head;
+    while(curr->next) {
+        curr = curr->next;
+    }
+    // Curr->next should be where to inject the new node
+    IntNode_t *new_node = malloc(sizeof(IntNode_t));
+    if (!new_node) return -1;
+    new_node->val = value;
+    new_node->next = curr->next;
+    curr->next = new_node;
+    
+    return 0;
 }
 
 int pop_back(IntNode_t** head) {
