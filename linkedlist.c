@@ -141,6 +141,29 @@ int cleanup_list(IntNode_t** head) {
     return 0;
 }
 
+IntNode_t * create_list(int* elements, size_t num_elements) {
+    size_t idx;
+    IntNode_t* head = NULL;
+    IntNode_t* prev = head;
+    for (idx=0; idx < num_elements; idx++) {
+        int value = *elements + idx;
+        // Allocate a new node
+        IntNode_t* new_node = malloc(sizeof(IntNode_t));
+        if (!new_node) return NULL;
+        new_node->val = value;
+        new_node->next = NULL;
+        if (!head) {
+            // First node allocated
+            head = new_node;
+        } else {
+            // There should be some prev
+            prev->next = new_node;
+        }
+        prev = new_node;
+    }
+    return head;
+}
+
 int main() {
     IntNode_t node = {5, NULL};
     IntNode_t node2 = {10, NULL};
@@ -212,4 +235,9 @@ int main() {
     print_list(listhead);
     int cleanup_result = cleanup_list(&listhead);
     print_list(listhead);
+
+    printf("=======NEW CREATE=======\n");
+    int arr[] = {1,2,3,4,5};
+    IntNode_t * new_create_list_head = create_list(arr, sizeof(arr)/sizeof(arr[0]));
+    print_list(new_create_list_head);
 }
