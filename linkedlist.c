@@ -128,6 +128,19 @@ IntNode_t* find_middle_node(IntNode_t* head) {
     
 }
 
+int cleanup_list(IntNode_t** head) {
+    if (!head) return -1; // not a proper list to cleanup
+    IntNode_t * curr = *head;
+    IntNode_t * next;
+    while(curr) {
+        next = curr->next; // save next node
+        free(curr);
+        curr = next;
+    }
+    *head = NULL;
+    return 0;
+}
+
 int main() {
     IntNode_t node = {5, NULL};
     IntNode_t node2 = {10, NULL};
@@ -193,6 +206,10 @@ int main() {
     printf("======PUSH FRONT=========\n");
     IntNode_t * listhead = NULL;
     print_list(listhead);
+    push_back(&listhead, 3);
     push_front(&listhead, 1);
+    push_back(&listhead, 2);
+    print_list(listhead);
+    int cleanup_result = cleanup_list(&listhead);
     print_list(listhead);
 }
