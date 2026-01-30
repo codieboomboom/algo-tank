@@ -39,7 +39,6 @@ IntNode_t* reverse_list(IntNode_t* head) {
         // Move on (fwd direction)
         curr = next;
     }
-
     return prev; // as curr would now be NULL
 }
 
@@ -126,6 +125,16 @@ void deduplicate_list(IntNode_t* head) {
 
 IntNode_t* find_middle_node(IntNode_t* head) {
     
+}
+
+size_t get_length(IntNode_t* head) {
+    size_t num_of_nodes = 0;
+    IntNode_t* curr = head;
+    while(curr) {
+        num_of_nodes+=1;
+        curr = curr->next;
+    }
+    return num_of_nodes;
 }
 
 int cleanup_list(IntNode_t** head) {
@@ -239,5 +248,8 @@ int main() {
     printf("=======NEW CREATE=======\n");
     int arr[] = {1,2,3,4,5};
     IntNode_t * new_create_list_head = create_list(arr, sizeof(arr)/sizeof(arr[0]));
+    printf("The list has %zu elements\n", get_length(new_create_list_head));
+    print_list(new_create_list_head);
+    cleanup_result = cleanup_list(&new_create_list_head);
     print_list(new_create_list_head);
 }
