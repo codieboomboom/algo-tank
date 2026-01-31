@@ -142,6 +142,17 @@ int peek_front(IntNode_t* head) {
     return head->val;
 }
 
+int peek_back(IntNode_t* head) {
+    if (!head) return -1;
+    IntNode_t* curr = head;
+    // If wanted to stop one node before use curr->next, or use curr and aux prev ptr can too
+    while(curr->next) {
+        curr = curr->next;
+    }
+    return curr->val;
+
+}
+
 int cleanup_list(IntNode_t** head) {
     if (!head) return -1; // not a proper list to cleanup
     IntNode_t * curr = *head;
@@ -256,6 +267,7 @@ int main() {
     printf("The list has %zu elements\n", get_length(new_create_list_head));
     print_list(new_create_list_head);
     printf("The first element in the list is %d\n", peek_front(new_create_list_head));
+    printf("The last element in the list is %d\n", peek_back(new_create_list_head));
     cleanup_result = cleanup_list(&new_create_list_head);
     print_list(new_create_list_head);
 }
