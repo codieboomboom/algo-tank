@@ -6,6 +6,7 @@ void insertion_sort(int* arr, size_t nmemb) {
 }
 
 void bubble_sort(int* arr, size_t nmemb) {
+    if (nmemb < 2) return; // nothing to sort
     // Imagine bubble up until surface
     // If there are n-elements, we need max n-1 passes
     for (size_t offset_rightmost = 0; offset_rightmost < nmemb-1; offset_rightmost++) {
@@ -39,10 +40,16 @@ int main() {
     bubble_sort(arr, arr_len);
     print_array(arr, arr_len);
 
-    int arr2[] = NULL;
+    // int arr2[] = NULL; // in standard C there is no such thing as empty array
+
     int arr3[] = {3, 2, 1};
     size_t arr3_len = sizeof(arr3)/sizeof(arr3[0]);
     bubble_sort(arr3, arr3_len);
     print_array(arr3, arr3_len);
+
+    int arr4[] = {1};
+    size_t arr4_len = sizeof(arr4)/sizeof(arr4[0]);
+    bubble_sort(arr4, arr4_len);
+    print_array(arr4, arr4_len);    
     return 0;
 }
