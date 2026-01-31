@@ -137,6 +137,11 @@ size_t get_length(IntNode_t* head) {
     return num_of_nodes;
 }
 
+int peek_front(IntNode_t* head) {
+    if (!head) return -1;
+    return head->val;
+}
+
 int cleanup_list(IntNode_t** head) {
     if (!head) return -1; // not a proper list to cleanup
     IntNode_t * curr = *head;
@@ -250,6 +255,7 @@ int main() {
     IntNode_t * new_create_list_head = create_list(arr, sizeof(arr)/sizeof(arr[0]));
     printf("The list has %zu elements\n", get_length(new_create_list_head));
     print_list(new_create_list_head);
+    printf("The first element in the list is %d\n", peek_front(new_create_list_head));
     cleanup_result = cleanup_list(&new_create_list_head);
     print_list(new_create_list_head);
 }
