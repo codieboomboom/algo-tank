@@ -7,17 +7,17 @@ void insertion_sort(int* arr, size_t nmemb) {
         return;
     }
     for (size_t key_idx = 1; key_idx <= nmemb-1; key_idx++) {
-        int key = *(arr+key_idx);
-        for (size_t pos_idx = key_idx; pos_idx >0; pos_idx--) {
-            // Compare the key with each previous postion
-            if (key < *(arr+pos_idx-1)) {
-                *(arr+pos_idx) = *(arr+pos_idx-1);
-            }
-            else {
-                *(arr+pos_idx) = key; // Dind't work
+        int key = arr[key_idx];
+        size_t compare_idx = 0;
+        // Note: exclude compare_idx = 0, otw will overflow
+        for (compare_idx = key_idx-1; compare_idx>0; compare_idx--) {
+            if (key < arr[compare_idx]) {
+                arr[compare_idx+1] = arr[compare_idx];
+            } else {
                 break;
             }
         }
+        arr[compare_idx+1] = key;
     }
     return;
 }
