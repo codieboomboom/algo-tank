@@ -2,6 +2,23 @@
 #include <stdlib.h>
 
 void insertion_sort(int* arr, size_t nmemb) {
+    if (nmemb < 2) {
+        // NO sorting needed
+        return;
+    }
+    for (size_t key_idx = 1; key_idx <= nmemb-1; key_idx++) {
+        int key = *(arr+key_idx);
+        for (size_t pos_idx = key_idx; pos_idx >0; pos_idx--) {
+            // Compare the key with each previous postion
+            if (key < *(arr+pos_idx-1)) {
+                *(arr+pos_idx) = *(arr+pos_idx-1);
+            }
+            else {
+                *(arr+pos_idx) = key; // Dind't work
+                break;
+            }
+        }
+    }
     return;
 }
 
@@ -37,6 +54,8 @@ void print_array(int* arr, size_t nmemb) {
 int main() {
     int arr[] = {-1,3,-2,1,2,10,5};
     size_t arr_len = sizeof(arr)/sizeof(arr[0]);
+    insertion_sort(arr, arr_len);
+    print_array(arr, arr_len);
     bubble_sort(arr, arr_len);
     print_array(arr, arr_len);
 
