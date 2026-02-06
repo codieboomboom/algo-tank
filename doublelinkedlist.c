@@ -45,7 +45,23 @@ DoubleList_t* create_list(int* elements, size_t nmemb) {
     return list;
 }
 
-void cleanup(DoubleList_t* list){
+void cleanup(DoubleList_t** list){
+    if (!list || !(*list)) return; // nothing to do here
+
+    // Go through list from any direction, prefered from head
+    ListNode_t* curr_node = (*list)->head;
+    ListNode_t* next = NULL;
+    while (curr_node) {
+        printf("%d\n", curr_node->value);
+        next = curr_node->next;
+        free(curr_node);
+        curr_node = next;
+    }
+
+    (*list)->head = NULL;
+    (*list)->tail = NULL;
+    (*list)->size = 0;
+    *list = NULL;
     return;
 }
 
@@ -72,6 +88,9 @@ void print_list(DoubleList_t* list, int head_to_tail) {
 int main() {
     int arr[5] = {4, 2, 3, 6, 8};
     DoubleList_t* list = create_list(arr, sizeof(arr)/sizeof(arr[0]));
+    print_list(list, 1);
+    print_list(list, 0);
+    cleanup(&list);
     print_list(list, 1);
     print_list(list, 0);
 }
