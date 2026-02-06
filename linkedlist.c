@@ -162,7 +162,7 @@ int cleanup_list(IntNode_t** head) {
         free(curr);
         curr = next;
     }
-    *head = NULL;
+    *head = NULL; // nullify for you: defensive programming
     return 0;
 }
 
