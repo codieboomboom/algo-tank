@@ -15,8 +15,14 @@ typedef struct DoubleList {
 
 DoubleList_t* create_list(int* elements, size_t nmemb) {
     if (!nmemb) return NULL; //empty
+
+    // Init the list
     DoubleList_t* list = malloc(sizeof(DoubleList_t));
     if(!list) return NULL;
+
+    list->head = NULL;
+    list->tail = NULL;
+    list->size = 0;
     // Declare to be NULL first
     ListNode_t* prev = NULL;
     ListNode_t* next = NULL;
@@ -52,7 +58,6 @@ void cleanup(DoubleList_t** list){
     ListNode_t* curr_node = (*list)->head;
     ListNode_t* next = NULL;
     while (curr_node) {
-        printf("%d\n", curr_node->value);
         next = curr_node->next;
         free(curr_node);
         curr_node = next;
@@ -66,6 +71,8 @@ void cleanup(DoubleList_t** list){
 }
 
 void print_list(DoubleList_t* list, int head_to_tail) {
+    if(!list) return; // GUARD IMPORTANT, otherwise list->head might be attempted, invalid...
+
     ListNode_t* curr_node = NULL;
     if (head_to_tail) {
         printf("Walking list from head to tail: ");
