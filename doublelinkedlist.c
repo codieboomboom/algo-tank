@@ -63,9 +63,7 @@ void cleanup(DoubleList_t** list){
         curr_node = next;
     }
 
-    (*list)->head = NULL;
-    (*list)->tail = NULL;
-    (*list)->size = 0;
+    free(*list);
     *list = NULL;
     return;
 }
