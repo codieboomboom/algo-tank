@@ -84,7 +84,11 @@ ErrorCode_t push_back(DoubleList_t* list, int value) {
     node->next = NULL;
     node->prev = list->tail; // previous node should be the list current tail
     if (list->tail) {
+        // Existed
         list->tail->next = node; // previous tail should point to this new node
+    } else {
+        // First node in a list means we also need to point the head of list to this guy
+        list->head = node;
     }
     list->tail = node;
     list->size++;
