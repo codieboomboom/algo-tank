@@ -17,6 +17,7 @@ typedef enum ErrorCode{
     SUCCESS,
     ERROR_LIST_NOT_EXIST,
     ERROR_LIST_INCONSISTENT_PTR,
+    ERROR_LIST_IS_EMPTY,
     ERROR_HEAP_ALLOC_FAILED
 } ErrorCode_t;
 
@@ -96,6 +97,36 @@ ErrorCode_t push_back(DoubleList_t* list, int value) {
     return SUCCESS;
 }
 
+ErrorCode_t pop_back(DoubleList_t* list) {
+
+}
+
+int peek_head(DoubleList_t* list, ErrorCode_t* status_return) {
+    *status_return = SUCCESS;
+    if (!list) {
+        *status_return = ERROR_LIST_NOT_EXIST;
+        return -1; // USER MUST CHECK
+    }
+    if (!(list->head)) {
+        *status_return = ERROR_LIST_IS_EMPTY;
+        return -1;
+    }
+    return list->head->value;
+}
+
+int peek_tail(DoubleList_t* list, ErrorCode_t* status_return) {
+    *status_return = SUCCESS;
+    if (!list) {
+        *status_return = ERROR_LIST_NOT_EXIST;
+        return -1; // USER must check outside
+    }
+    if(!(list->tail)) {
+        *status_return = ERROR_LIST_IS_EMPTY;
+        return -1;
+    }
+    return list->tail->value;
+}
+
 
 // We use **list over *list because we want to clear the *list to NULL after free
 void cleanup(DoubleList_t** list){
@@ -147,9 +178,20 @@ int main() {
     print_list(list, 1);
     print_list(list, 0);
 
+    int head_value;
+    int tail_value;
     DoubleList_t* list2 = init_list();
     result = push_back(list2, 1);
+    head_value = peek_head(list2, &result);
+    if(result == SUCCESS) printf("HEAD: %d \n", head_value);
+    tail_value = peek_tail(list2, &result);
+    if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
+    result = push_back(list2, 2);
     print_list(list2, 1);
     print_list(list2, 0);
+    head_value = peek_head(list2, &result);
+    if(result == SUCCESS) printf("HEAD: %d \n", head_value);
+    tail_value = peek_tail(list2, &result);
+    if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
     cleanup(&list2);
 }
