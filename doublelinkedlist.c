@@ -13,6 +13,13 @@ typedef struct DoubleList {
     size_t size;
 } DoubleList_t;
 
+typedef enum ErrorCode{
+    SUCCESS,
+    ERROR_LIST_NOT_EXIST,
+    ERROR_LIST_INCONSISTENT_PTR,
+    ERROR_HEAP_ALLOC_FAILED
+} ErrorCode_t;
+
 DoubleList_t* create_list(int* elements, size_t nmemb) {
     if (!nmemb) return NULL; //empty
 
@@ -52,7 +59,7 @@ DoubleList_t* create_list(int* elements, size_t nmemb) {
 }
 
 DoubleList_t* init_list() {
-    // Init the list
+    // Init the list empty
     DoubleList_t* list = malloc(sizeof(DoubleList_t));
     if(!list) return NULL;
 
@@ -63,6 +70,30 @@ DoubleList_t* init_list() {
     return list;
 }
 
+ErrorCode_t push_back(DoubleList_t* list, int value) {
+    if(!list) return ERROR_LIST_NOT_EXIST;
+
+    if (list->head && !(list->tail) || !(list->head) && list->tail) {
+        return ERROR_LIST_INCONSISTENT_PTR;
+    }
+
+    ListNode_t* node = malloc(sizeof(ListNode_t));
+    if (!node) return ERROR_HEAP_ALLOC_FAILED;
+
+    node->value = value;
+    node->next = NULL;
+    node->prev = list->tail; // previous node should be the list current tail
+    if (list->tail) {
+        list->tail->next = node; // previous tail should point to this new node
+    }
+    list->tail = node;
+    list->size++;
+
+    return SUCCESS;
+}
+
+
+// We use **list over *list because we want to clear the *list to NULL after free
 void cleanup(DoubleList_t** list){
     if (!list || !(*list)) return; // nothing to do here
 
@@ -103,6 +134,7 @@ void print_list(DoubleList_t* list, int head_to_tail) {
 }
 
 int main() {
+    ErrorCode_t result = SUCCESS;
     int arr[5] = {4, 2, 3, 6, 8};
     DoubleList_t* list = create_list(arr, sizeof(arr)/sizeof(arr[0]));
     print_list(list, 1);
@@ -110,4 +142,10 @@ int main() {
     cleanup(&list);
     print_list(list, 1);
     print_list(list, 0);
+
+    DoubleList_t* list2 = init_list();
+    result = push_back(list2, 1);
+    print_list(list2, 1);
+    print_list(list2, 0);
+    cleanup(&list2);
 }
