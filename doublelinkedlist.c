@@ -21,6 +21,11 @@ typedef enum ErrorCode{
     ERROR_HEAP_ALLOC_FAILED
 } ErrorCode_t;
 
+typedef enum Order{
+    HEAD_TO_TAIL,
+    TAIL_TO_HEAD,
+} Order_t;
+
 DoubleList_t* create_list(int* elements, size_t nmemb) {
     if (!nmemb) return NULL; //empty
 
@@ -146,11 +151,11 @@ void cleanup(DoubleList_t** list){
     return;
 }
 
-void print_list(DoubleList_t* list, int head_to_tail) {
+void print_list(DoubleList_t* list, Order_t print_order) {
     if(!list) return; // GUARD IMPORTANT, otherwise list->head might be attempted, invalid...
 
     ListNode_t* curr_node = NULL;
-    if (head_to_tail) {
+    if (print_order == HEAD_TO_TAIL) {
         printf("Walking list from head to tail: ");
         curr_node = list->head;
         while(curr_node) {
@@ -172,11 +177,11 @@ int main() {
     ErrorCode_t result = SUCCESS;
     int arr[5] = {4, 2, 3, 6, 8};
     DoubleList_t* list = create_list(arr, sizeof(arr)/sizeof(arr[0]));
-    print_list(list, 1);
-    print_list(list, 0);
+    print_list(list, HEAD_TO_TAIL);
+    print_list(list, TAIL_TO_HEAD);
     cleanup(&list);
-    print_list(list, 1);
-    print_list(list, 0);
+    print_list(list, HEAD_TO_TAIL);
+    print_list(list, TAIL_TO_HEAD);
 
     int head_value;
     int tail_value;
@@ -187,8 +192,8 @@ int main() {
     tail_value = peek_tail(list2, &result);
     if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
     result = push_back(list2, 2);
-    print_list(list2, 1);
-    print_list(list2, 0);
+    print_list(list2, HEAD_TO_TAIL);
+    print_list(list2, TAIL_TO_HEAD);
     head_value = peek_head(list2, &result);
     if(result == SUCCESS) printf("HEAD: %d \n", head_value);
     tail_value = peek_tail(list2, &result);
