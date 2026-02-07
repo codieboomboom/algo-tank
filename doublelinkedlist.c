@@ -51,6 +51,18 @@ DoubleList_t* create_list(int* elements, size_t nmemb) {
     return list;
 }
 
+DoubleList_t* init_list() {
+    // Init the list
+    DoubleList_t* list = malloc(sizeof(DoubleList_t));
+    if(!list) return NULL;
+
+    list->head = NULL;
+    list->tail = NULL;
+    list->size = 0;
+
+    return list;
+}
+
 void cleanup(DoubleList_t** list){
     if (!list || !(*list)) return; // nothing to do here
 
