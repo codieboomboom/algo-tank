@@ -7,6 +7,9 @@ typedef struct ListNode {
     struct ListNode *prev;
 } ListNode_t;
 
+// Well technically you can use 2 ptr raw and no need this data structure at all
+// but that would require passing their reference into every function
+// and update would still be the same, but package them like this would be so much nicer
 typedef struct DoubleList {
     ListNode_t* head;
     ListNode_t* tail;
@@ -102,8 +105,36 @@ ErrorCode_t push_back(DoubleList_t* list, int value) {
     return SUCCESS;
 }
 
-ErrorCode_t pop_back(DoubleList_t* list) {
+int pop_back(DoubleList_t* list, ErrorCode_t* status_return) {
+    int popped_val;
+    ListNode_t* temp = NULL;
 
+    *status_return = SUCCESS;
+    if(!list) {
+        *status_return = ERROR_LIST_NOT_EXIST;
+        return -1;
+    }
+    if(!(list->head) || !(list->tail)) {
+        *status_return = ERROR_LIST_IS_EMPTY;
+        return -1;
+    }
+
+    popped_val = list->tail->value;
+
+    temp = list->tail->prev;
+    free(list->tail);
+    list->tail = temp;
+
+    // Either pop not the first node or pop the first node, 2 cases
+    if (list->tail) {
+        list->tail->next = NULL;
+    } else {
+        // list->tail NULL means the list also has 0 elements now, so I need to change the list head to
+        list->head = NULL;
+    }
+
+    list->size--;
+    return popped_val;
 }
 
 int peek_head(DoubleList_t* list, ErrorCode_t* status_return) {
@@ -185,6 +216,7 @@ int main() {
 
     int head_value;
     int tail_value;
+    int popped_value;
     DoubleList_t* list2 = init_list();
     result = push_back(list2, 1);
     head_value = peek_head(list2, &result);
@@ -198,5 +230,16 @@ int main() {
     if(result == SUCCESS) printf("HEAD: %d \n", head_value);
     tail_value = peek_tail(list2, &result);
     if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
+
+    popped_value = pop_back(list2, &result);
+    if(result == SUCCESS) printf("POPPED: %d \n", popped_value);
+    print_list(list2, HEAD_TO_TAIL);
+    print_list(list2, TAIL_TO_HEAD);
+    popped_value = pop_back(list2, &result);
+    if(result == SUCCESS) printf("POPPED: %d \n", popped_value);
+    print_list(list2, HEAD_TO_TAIL);
+    print_list(list2, TAIL_TO_HEAD);
+    
+
     cleanup(&list2);
 }
