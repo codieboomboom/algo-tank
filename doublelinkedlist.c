@@ -132,6 +132,40 @@ ErrorCode_t push_front(DoubleList_t* list, int value) {
     return SUCCESS;
 }
 
+int pop_front(DoubleList_t* list, ErrorCode_t* status_return) {
+    int popped_val;
+    ListNode_t* next_head = NULL;
+
+    *status_return = SUCCESS; // default
+
+    if (!list) {
+        *status_return = ERROR_LIST_NOT_EXIST;
+        return -1;
+    }
+    if (!(list->head) || !(list->tail) || list->size == 0) {
+        *status_return = ERROR_LIST_IS_EMPTY;
+        return -1;
+    }
+
+    popped_val = list->head->value;
+
+    next_head = list->head->next; // save what is next after the head node
+    free(list->head); // free the head node - pop it
+    list->head = next_head; //assign the next one to be head now
+
+
+    // 2 scenario, the next one (new/curr head) is NULL (popped one was only node) OR the next one is a ListNode
+    if (list->head) {
+        list->head->prev = NULL; //head node should have prev ptr to NULL
+    } else {
+        // the list is now empty, thus setting tail to null
+        list->tail = NULL;
+    }
+
+    list->size--;
+    return popped_val;
+}
+
 int pop_back(DoubleList_t* list, ErrorCode_t* status_return) {
     int popped_val;
     ListNode_t* next_tail = NULL;
@@ -282,6 +316,15 @@ int main() {
     if(result == SUCCESS) printf("HEAD: %d \n", head_value);
     tail_value = peek_tail(list3, &result);
     if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
+
+    popped_value = pop_front(list3, &result);
+    if(result == SUCCESS) printf("POPPED: %d \n", popped_value);
+    print_list(list3, HEAD_TO_TAIL);
+    print_list(list3, TAIL_TO_HEAD);
+    popped_value = pop_front(list3, &result);
+    if(result == SUCCESS) printf("POPPED: %d \n", popped_value);
+    print_list(list3, HEAD_TO_TAIL);
+    print_list(list3, TAIL_TO_HEAD);
 
     cleanup(&list3);
 }
