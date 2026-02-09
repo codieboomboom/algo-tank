@@ -105,6 +105,33 @@ ErrorCode_t push_back(DoubleList_t* list, int value) {
     return SUCCESS;
 }
 
+ErrorCode_t push_front(DoubleList_t* list, int value) {
+    if (!list) return ERROR_LIST_NOT_EXIST;
+
+    if (list->head && !(list->tail) || !(list->head) && list->tail) {
+        return ERROR_LIST_INCONSISTENT_PTR;
+    }
+
+    ListNode_t* node = malloc(sizeof(ListNode_t));
+    if (!node) return ERROR_HEAP_ALLOC_FAILED;
+
+    node->value = value;
+    node->prev = NULL;
+    node->next = list->head;
+    // Is this node the first node inserted to an empty list
+    if (list->head) {
+        // NO, meaning the previous head here must refer to our new node by prev ptr too
+        list->head->prev = node;
+    } else {
+        // YES, we need to update the tail too
+        list->tail = node;
+    }
+    list->head = node;
+    list->size++;
+
+    return SUCCESS;
+}
+
 int pop_back(DoubleList_t* list, ErrorCode_t* status_return) {
     int popped_val;
     ListNode_t* temp = NULL;
@@ -240,6 +267,21 @@ int main() {
     print_list(list2, HEAD_TO_TAIL);
     print_list(list2, TAIL_TO_HEAD);
     
-
     cleanup(&list2);
+
+    DoubleList_t* list3 = init_list();
+    result = push_front(list3, 1);
+    head_value = peek_head(list3, &result);
+    if(result == SUCCESS) printf("HEAD: %d \n", head_value);
+    tail_value = peek_tail(list3, &result);
+    if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
+    result = push_front(list3, 2);
+    print_list(list3, HEAD_TO_TAIL);
+    print_list(list3, TAIL_TO_HEAD);
+    head_value = peek_head(list3, &result);
+    if(result == SUCCESS) printf("HEAD: %d \n", head_value);
+    tail_value = peek_tail(list3, &result);
+    if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
+
+    cleanup(&list3);
 }
