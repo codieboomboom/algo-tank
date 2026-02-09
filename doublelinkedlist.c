@@ -134,23 +134,23 @@ ErrorCode_t push_front(DoubleList_t* list, int value) {
 
 int pop_back(DoubleList_t* list, ErrorCode_t* status_return) {
     int popped_val;
-    ListNode_t* temp = NULL;
+    ListNode_t* next_tail = NULL;
 
     *status_return = SUCCESS;
     if(!list) {
         *status_return = ERROR_LIST_NOT_EXIST;
         return -1;
     }
-    if(!(list->head) || !(list->tail)) {
+    if(!(list->head) || !(list->tail) || list->size == 0) {
         *status_return = ERROR_LIST_IS_EMPTY;
         return -1;
     }
 
     popped_val = list->tail->value;
 
-    temp = list->tail->prev;
+    next_tail = list->tail->prev;
     free(list->tail);
-    list->tail = temp;
+    list->tail = next_tail;
 
     // Either pop not the first node or pop the first node, 2 cases
     if (list->tail) {
