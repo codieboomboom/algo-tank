@@ -224,6 +224,14 @@ int peek_tail(DoubleList_t* list, ErrorCode_t* status_return) {
     return list->tail->value;
 }
 
+size_t get_size(DoubleList_t* list, ErrorCode_t* status_return) {
+    *status_return = SUCCESS;
+    if (!list) {
+        *status_return = ERROR_LIST_NOT_EXIST;
+        return 0;
+    }
+    return list->size;
+}
 
 // We use **list over *list because we want to clear the *list to NULL after free
 void cleanup(DoubleList_t** list){
