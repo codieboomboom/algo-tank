@@ -224,6 +224,7 @@ int peek_tail(DoubleList_t* list, ErrorCode_t* status_return) {
     return list->tail->value;
 }
 
+// TODO: TEST
 size_t get_size(DoubleList_t* list, ErrorCode_t* status_return) {
     *status_return = SUCCESS;
     if (!list) {
@@ -231,6 +232,25 @@ size_t get_size(DoubleList_t* list, ErrorCode_t* status_return) {
         return 0;
     }
     return list->size;
+}
+
+// TODO: TEST
+void clear(DoubleList_t *list) {
+    if(!list) return;
+
+    ListNode* curr_node = list->head;
+    ListNode* temp = NULL;
+    while(curr_node) {
+        temp = curr_node->next;
+        free(curr_node);
+        curr_node = temp;
+    }
+
+    list->head = NULL;
+    list->tail = NULL;
+    list->size = 0;
+
+    return;
 }
 
 // We use **list over *list because we want to clear the *list to NULL after free
