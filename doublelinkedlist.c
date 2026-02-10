@@ -238,8 +238,8 @@ size_t get_size(DoubleList_t* list, ErrorCode_t* status_return) {
 void clear(DoubleList_t *list) {
     if(!list) return;
 
-    ListNode* curr_node = list->head;
-    ListNode* temp = NULL;
+    ListNode_t *curr_node = list->head;
+    ListNode_t *temp = NULL;
     while(curr_node) {
         temp = curr_node->next;
         free(curr_node);
@@ -344,6 +344,22 @@ int main() {
     if(result == SUCCESS) printf("HEAD: %d \n", head_value);
     tail_value = peek_tail(list3, &result);
     if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
+    printf("Size of list: %zu\n", get_size(list3, &result));
+    clear(list3);
+    printf("Size of list: %zu\n", get_size(list3, &result));
+
+    result = push_front(list3, 500);
+    head_value = peek_head(list3, &result);
+    if(result == SUCCESS) printf("HEAD: %d \n", head_value);
+    tail_value = peek_tail(list3, &result);
+    if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
+    result = push_front(list3, 999);
+    print_list(list3, HEAD_TO_TAIL);
+    print_list(list3, TAIL_TO_HEAD);
+    head_value = peek_head(list3, &result);
+    if(result == SUCCESS) printf("HEAD: %d \n", head_value);
+    tail_value = peek_tail(list3, &result);
+    if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
 
     popped_value = pop_front(list3, &result);
     if(result == SUCCESS) printf("POPPED: %d \n", popped_value);
@@ -353,6 +369,7 @@ int main() {
     if(result == SUCCESS) printf("POPPED: %d \n", popped_value);
     print_list(list3, HEAD_TO_TAIL);
     print_list(list3, TAIL_TO_HEAD);
+    printf("Size of list: %zu\n", get_size(list3, &result));
 
     cleanup(&list3);
 }
