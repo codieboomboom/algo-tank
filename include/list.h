@@ -33,7 +33,7 @@ size_t get_size(List_t* list, ErrorCode_t* err_status);
 ErrorCode_t push_back(List_t* list, int value);
 ErrorCode_t push_front(List_t* list, int value);
 
-int pop_front(List_t* list, ErrorCode_t* status_return);
-int pop_back(List_t* list, ErrorCode_t* status_return);
+int pop_front(List_t* list, ErrorCode_t* err_return);
+int pop_back(List_t* list, ErrorCode_t* err_return);
 
 #endif
