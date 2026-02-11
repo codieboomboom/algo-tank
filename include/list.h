@@ -20,7 +20,7 @@ typedef enum Order{
 
 List_t *init_list();
 
-List_t *create_list(int* elems, size_t nmemb);
+List_t *create_list(int* elements, size_t nmemb);
 
 void clear_list(List_t* list);
 
@@ -33,9 +33,9 @@ size_t get_size(List_t* list, ErrorCode_t* err_status);
 ErrorCode_t push_back(List_t* list, int value);
 ErrorCode_t push_front(List_t* list, int value);
 
-int pop_front(List_t* list, ErrorCode_t* err_return);
-int pop_back(List_t* list, ErrorCode_t* err_return);
+int pop_front(List_t* list, ErrorCode_t* err_status);
+int pop_back(List_t* list, ErrorCode_t* err_status);
 
-void print(List_t* list, Order_t Order);
+void print(List_t* list, Order_t order);
 
 #endif
