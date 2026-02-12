@@ -81,12 +81,28 @@ void destroy_list(List_t** list) {
     return;
 }
 
-int peek_front(List_t* list, ErrorCode_t* err_status);
+int peek_front(List_t* list, ErrorCode_t* err_status) {
+    err_status = SUCCESS;
+
+    if (!list) {
+        err_status = ERROR_LIST_NOT_EXIST;
+        return -1;
+    }
+
+    if (!(list->head)) {
+        err_status = ERROR_LIST_IS_EMPTY; // cannot peek
+        return -1;
+    }
+
+    return list->head->value;
+}
 int peek_back(List_t* list, ErrorCode_t* err_status);
 
 size_t get_size(List_t* list, ErrorCode_t* err_status) {
+    err_status = SUCCESS;
     if (!list) {
         err_status = ERROR_LIST_NOT_EXIST;
+        return 0;
     }
     return list->size;
 }
