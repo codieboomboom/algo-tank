@@ -7,6 +7,7 @@ typedef struct List List_t;
 
 typedef enum ErrorCode{
     SUCCESS,
+    NOT_IMPLEMENTED,
     ERROR_LIST_NOT_EXIST,
     ERROR_LIST_INCONSISTENT_PTR,
     ERROR_LIST_IS_EMPTY,
