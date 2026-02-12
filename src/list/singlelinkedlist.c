@@ -13,13 +13,73 @@ struct List {
     size_t size;
 };
 
-List_t *init_list();
+List_t *init_list() {
+    List_t *list = calloc(1, sizeof(List_t));
+    if (!list) return NULL;
+    return list;
+}
 
-List_t *create_list(int* elements, size_t nmemb);
+List_t *create_list(int* elements, size_t nmemb) {
+    List_t *list = calloc(1, sizeof(List_t));
+    if (!list) return NULL;
 
-void clear_list(List_t* list);
+    ListNode_t* prev = NULL;
 
-void destroy_list(List_t** list);
+    for (size_t idx = 0; idx < nmemb; idx++) {
+        ListNode_t* node = calloc(1, sizeof(ListNode_t));
+        if (!node) {
+            destroy_list(&list);
+        }
+        node->value = elements[idx];
+        if (!(list->head) && list->size == 0) {
+            // First node
+            list->head = node;
+        } else {
+            // Not the first node, so there should be prev
+            prev->next = node;
+        }
+        prev = node;
+        list->size++;
+    }
+
+    return list;
+}
+
+void clear_list(List_t* list) {
+    if (!list) return; // nothing to do
+
+    ListNode_t* curr_node = list->head;
+    ListNode_t* next_node = NULL;
+    while (curr_node) {
+        next_node = curr_node->next;
+        free(curr_node);
+        curr_node = next_node;
+        list->size--;
+    }
+
+    list->head = NULL;
+    list->size = 0;
+
+    return;
+}
+
+void destroy_list(List_t** list) {
+    if (!list || !(*list)) return;
+
+    ListNode_t* curr_node = (*list)->head;
+    ListNode_t* next_node = NULL;
+    while (curr_node) {
+        next_node = curr_node->next;
+        free(curr_node);
+        curr_node = next_node;
+        (*list)->size--;
+    }
+
+    free(*list);
+    *list = NULL;
+
+    return;
+}
 
 int peek_front(List_t* list, ErrorCode_t* err_status);
 int peek_back(List_t* list, ErrorCode_t* err_status);
@@ -32,3 +92,7 @@ int pop_front(List_t* list, ErrorCode_t* err_status);
 int pop_back(List_t* list, ErrorCode_t* err_status);
 
 void print(List_t* list, Order_t order);
+
+int main() {
+    return 0;
+}
