@@ -34,7 +34,7 @@ List_t* create_list(int* elements, size_t nmemb) {
     for (size_t mem_idx = 0; mem_idx < nmemb; mem_idx++) {
         ListNode_t* node = malloc(sizeof(ListNode_t));
         if(!node) {
-            // TODO: Cleanup list here
+            destroy_list(&list);
             return NULL;
         }
         // First allocated node...
