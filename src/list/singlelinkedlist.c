@@ -83,7 +83,13 @@ void destroy_list(List_t** list) {
 
 int peek_front(List_t* list, ErrorCode_t* err_status);
 int peek_back(List_t* list, ErrorCode_t* err_status);
-size_t get_size(List_t* list, ErrorCode_t* err_status);
+
+size_t get_size(List_t* list, ErrorCode_t* err_status) {
+    if (!list) {
+        err_status = ERROR_LIST_NOT_EXIST;
+    }
+    return list->size;
+}
 
 ErrorCode_t push_back(List_t* list, int value);
 ErrorCode_t push_front(List_t* list, int value);
