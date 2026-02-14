@@ -113,7 +113,23 @@ ErrorCode_t push_front(List_t* list, int value);
 int pop_front(List_t* list, ErrorCode_t* err_status);
 int pop_back(List_t* list, ErrorCode_t* err_status);
 
-void print(List_t* list, Order_t order);
+void print(List_t* list, Order_t order) {
+    if (order == TAIL_TO_HEAD) {
+        printf("Tail To Head Order not supported!");
+        return;
+    }
+
+    if (!list) return;
+
+    ListNode_t* curr = list->head;
+    printf("Walking list from head to tail: ");
+    while(curr) {
+        printf("%d ", curr->value);
+        curr = curr->next;
+    }
+    printf("\n");
+    return;
+}
 
 int main() {
     return 0;
