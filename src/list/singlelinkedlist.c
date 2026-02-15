@@ -19,7 +19,7 @@ List_t *init_list() {
     return list;
 }
 
-List_t *create_list(int* elements, size_t nmemb) {
+List_t *create_list(const int* elements, size_t nmemb) {
     List_t *list = calloc(1, sizeof(List_t));
     if (!list) return NULL;
 
@@ -81,7 +81,7 @@ void destroy_list(List_t** list) {
     return;
 }
 
-int peek_front(List_t* list, ErrorCode_t* err_status) {
+int peek_front(const List_t* list, ErrorCode_t* err_status) {
     err_status = SUCCESS;
 
     if (!list) {
@@ -96,9 +96,9 @@ int peek_front(List_t* list, ErrorCode_t* err_status) {
 
     return list->head->value;
 }
-int peek_back(List_t* list, ErrorCode_t* err_status);
+int peek_back(const List_t* list, ErrorCode_t* err_status);
 
-size_t get_size(List_t* list, ErrorCode_t* err_status) {
+size_t get_size(const List_t* list, ErrorCode_t* err_status) {
     err_status = SUCCESS;
     if (!list) {
         err_status = ERROR_LIST_NOT_EXIST;
@@ -113,7 +113,7 @@ ErrorCode_t push_front(List_t* list, int value);
 int pop_front(List_t* list, ErrorCode_t* err_status);
 int pop_back(List_t* list, ErrorCode_t* err_status);
 
-void print(List_t* list, Order_t order) {
+void print(const List_t* list, Order_t order) {
     if (order == TAIL_TO_HEAD) {
         printf("Tail To Head Order not supported!");
         return;

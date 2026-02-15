@@ -18,7 +18,7 @@ struct List {
     size_t size;
 };
 
-List_t* create_list(int* elements, size_t nmemb) {
+List_t* create_list(const int* elements, size_t nmemb) {
     if (!nmemb) return NULL; //empty
 
     // Init the list
@@ -187,7 +187,7 @@ int pop_back(List_t* list, ErrorCode_t* err_status) {
     return popped_val;
 }
 
-int peek_front(List_t* list, ErrorCode_t* err_status) {
+int peek_front(const List_t* list, ErrorCode_t* err_status) {
     *err_status = SUCCESS;
     if (!list) {
         *err_status = ERROR_LIST_NOT_EXIST;
@@ -200,7 +200,7 @@ int peek_front(List_t* list, ErrorCode_t* err_status) {
     return list->head->value;
 }
 
-int peek_back(List_t* list, ErrorCode_t* err_status) {
+int peek_back(const List_t* list, ErrorCode_t* err_status) {
     *err_status = SUCCESS;
     if (!list) {
         *err_status = ERROR_LIST_NOT_EXIST;
@@ -214,7 +214,7 @@ int peek_back(List_t* list, ErrorCode_t* err_status) {
 }
 
 // TODO: TEST
-size_t get_size(List_t* list, ErrorCode_t* err_status) {
+size_t get_size(const List_t* list, ErrorCode_t* err_status) {
     *err_status = SUCCESS;
     if (!list) {
         *err_status = ERROR_LIST_NOT_EXIST;
@@ -260,7 +260,7 @@ void destroy_list(List_t** list){
     return;
 }
 
-void print(List_t* list, Order_t order) {
+void print(const List_t* list, Order_t order) {
     if(!list) return; // GUARD IMPORTANT, otherwise list->head might be attempted, invalid...
 
     ListNode_t* curr_node = NULL;
