@@ -71,7 +71,7 @@ List_t* init_list() {
 ErrorCode_t push_back(List_t* list, int value) {
     if(!list) return ERROR_LIST_NOT_EXIST;
 
-    if (list->head && !(list->tail) || !(list->head) && list->tail) {
+    if ((list->head && !(list->tail)) || (!(list->head) && list->tail)) {
         return ERROR_LIST_INCONSISTENT_PTR;
     }
 
@@ -97,7 +97,7 @@ ErrorCode_t push_back(List_t* list, int value) {
 ErrorCode_t push_front(List_t* list, int value) {
     if (!list) return ERROR_LIST_NOT_EXIST;
 
-    if (list->head && !(list->tail) || !(list->head) && list->tail) {
+    if ((list->head && !(list->tail)) || (!(list->head) && list->tail)) {
         return ERROR_LIST_INCONSISTENT_PTR;
     }
 
@@ -280,85 +280,4 @@ void print(const List_t* list, Order_t order) {
         }
     }
     printf("\n");
-}
-
-int main() {
-    ErrorCode_t result = SUCCESS;
-    int arr[5] = {4, 2, 3, 6, 8};
-    List_t* list = create_list(arr, sizeof(arr)/sizeof(arr[0]));
-    print(list, HEAD_TO_TAIL);
-    print(list, TAIL_TO_HEAD);
-    destroy_list(&list);
-    print(list, HEAD_TO_TAIL);
-    print(list, TAIL_TO_HEAD);
-
-    int head_value;
-    int tail_value;
-    int popped_value;
-    List_t* list2 = init_list();
-    result = push_back(list2, 1);
-    head_value = peek_front(list2, &result);
-    if(result == SUCCESS) printf("HEAD: %d \n", head_value);
-    tail_value = peek_back(list2, &result);
-    if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
-    result = push_back(list2, 2);
-    print(list2, HEAD_TO_TAIL);
-    print(list2, TAIL_TO_HEAD);
-    head_value = peek_front(list2, &result);
-    if(result == SUCCESS) printf("HEAD: %d \n", head_value);
-    tail_value = peek_back(list2, &result);
-    if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
-
-    popped_value = pop_back(list2, &result);
-    if(result == SUCCESS) printf("POPPED: %d \n", popped_value);
-    print(list2, HEAD_TO_TAIL);
-    print(list2, TAIL_TO_HEAD);
-    popped_value = pop_back(list2, &result);
-    if(result == SUCCESS) printf("POPPED: %d \n", popped_value);
-    print(list2, HEAD_TO_TAIL);
-    print(list2, TAIL_TO_HEAD);
-    
-    destroy_list(&list2);
-
-    List_t* list3 = init_list();
-    result = push_front(list3, 1);
-    head_value = peek_front(list3, &result);
-    if(result == SUCCESS) printf("HEAD: %d \n", head_value);
-    tail_value = peek_back(list3, &result);
-    if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
-    result = push_front(list3, 2);
-    print(list3, HEAD_TO_TAIL);
-    print(list3, TAIL_TO_HEAD);
-    head_value = peek_front(list3, &result);
-    if(result == SUCCESS) printf("HEAD: %d \n", head_value);
-    tail_value = peek_back(list3, &result);
-    if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
-    printf("Size of list: %zu\n", get_size(list3, &result));
-    clear_list(list3);
-    printf("Size of list: %zu\n", get_size(list3, &result));
-
-    result = push_front(list3, 500);
-    head_value = peek_front(list3, &result);
-    if(result == SUCCESS) printf("HEAD: %d \n", head_value);
-    tail_value = peek_back(list3, &result);
-    if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
-    result = push_front(list3, 999);
-    print(list3, HEAD_TO_TAIL);
-    print(list3, TAIL_TO_HEAD);
-    head_value = peek_front(list3, &result);
-    if(result == SUCCESS) printf("HEAD: %d \n", head_value);
-    tail_value = peek_back(list3, &result);
-    if(result == SUCCESS) printf("TAIL: %d \n", tail_value);
-
-    popped_value = pop_front(list3, &result);
-    if(result == SUCCESS) printf("POPPED: %d \n", popped_value);
-    print(list3, HEAD_TO_TAIL);
-    print(list3, TAIL_TO_HEAD);
-    popped_value = pop_front(list3, &result);
-    if(result == SUCCESS) printf("POPPED: %d \n", popped_value);
-    print(list3, HEAD_TO_TAIL);
-    print(list3, TAIL_TO_HEAD);
-    printf("Size of list: %zu\n", get_size(list3, &result));
-
-    destroy_list(&list3);
 }

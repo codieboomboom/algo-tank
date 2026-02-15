@@ -130,7 +130,3 @@ void print(const List_t* list, Order_t order) {
     printf("\n");
     return;
 }
-
-int main() {
-    return 0;
-}
