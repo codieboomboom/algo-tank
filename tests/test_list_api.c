@@ -38,12 +38,9 @@ static void expect_pop_back(List_t *list, int expected) {
     ASSERT_EQ_INT(v, expected);
 }
 
-/* ------------------------------
-   Test cases converted from your main()
-   ------------------------------ */
-
 /* 1) create_list + print smoke + destroy behavior */
 void test_list_create_print_destroy(void) {
+    printf("Test Case: test_list_create_print_destroy\n");
     int arr[5] = {4, 2, 3, 6, 8};
     List_t *list = create_list(arr, sizeof(arr)/sizeof(arr[0]));
     ASSERT_NOT_NULL(list);
@@ -67,6 +64,7 @@ void test_list_create_print_destroy(void) {
 
 /* 2) push_back flow (your list2 block) */
 void test_list_push_back_peek_pop_back(void) {
+    printf("Test Case: test_list_push_back_peek_pop_back\n");
     ErrorCode_t result = SUCCESS;
 
     List_t *list = init_list();
@@ -110,6 +108,7 @@ void test_list_push_back_peek_pop_back(void) {
 
 /* 3) push_front + clear + reuse + pop_front flow (your list3 block) */
 void test_list_push_front_clear_reuse_pop_front(void) {
+    printf("Test Case: test_list_push_front_clear_reuse_pop_front\n");
     ErrorCode_t result = SUCCESS;
 
     List_t *list = init_list();

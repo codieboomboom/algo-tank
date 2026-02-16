@@ -113,7 +113,7 @@ int peek_back(const List_t* list, ErrorCode_t* err_status) {
     while(curr->next) {
         curr = curr->next;
     }
-    
+
     return curr->value;
 }
 
@@ -147,17 +147,93 @@ ErrorCode_t push_back(List_t* list, int value) {
         list->head = node;
     }
 
+    list->size++;
+
     return SUCCESS;
 }
 
-ErrorCode_t push_front(List_t* list, int value);
+ErrorCode_t push_front(List_t* list, int value) {
+    if (!list) return ERROR_LIST_NOT_EXIST;
 
-int pop_front(List_t* list, ErrorCode_t* err_status);
-int pop_back(List_t* list, ErrorCode_t* err_status);
+    ListNode_t* node = calloc(1, sizeof(ListNode_t));
+    if (!node) {
+        return ERROR_HEAP_ALLOC_FAILED;
+    }
+    node->value = value;
+    node->next = list->head;
+    list->head = node;
+
+    list->size++;
+
+    return SUCCESS;
+}
+
+int pop_front(List_t* list, ErrorCode_t* err_status) {
+    *err_status = SUCCESS;
+
+    if (!list) {
+        *err_status = ERROR_LIST_NOT_EXIST;
+        return -1;
+    }
+
+    if (!(list->head)) {
+        *err_status = ERROR_LIST_IS_EMPTY;
+        return -1;
+    }
+
+    ListNode_t* next_node = list->head->next;
+    int value = list->head->value;
+    free(list->head);
+    if (!next_node) {
+        list->head = NULL;
+    } else {
+        list->head = next_node;
+    }
+
+    list->size--;
+
+    return value;
+}
+
+int pop_back(List_t* list, ErrorCode_t* err_status) {
+    *err_status = SUCCESS;
+
+    if (!list) {
+        *err_status = ERROR_LIST_NOT_EXIST;
+        return -1;
+    }
+
+    if (!(list->head)) {
+        *err_status = ERROR_LIST_IS_EMPTY;
+        return -1;
+    }
+
+    int value;
+    ListNode_t* curr = list->head;
+    ListNode_t* prev = NULL;
+    while(curr->next) {
+        prev = curr;
+        curr = curr->next;
+    }
+
+    value = curr->value;
+    free(curr); // deallocate the last node
+    // handle the previous node link to this node
+    if (!prev) {
+        // popping the only node in the list
+        list->head = NULL;
+    } else {
+        prev->next = NULL;
+    }
+
+    list->size--;
+
+    return value;
+}
 
 void print(const List_t* list, Order_t order) {
     if (order == TAIL_TO_HEAD) {
-        printf("Tail To Head Order not supported!");
+        printf("Tail To Head Order not supported!\n");
         return;
     }
 
