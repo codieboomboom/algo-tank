@@ -96,7 +96,26 @@ int peek_front(const List_t* list, ErrorCode_t* err_status) {
 
     return list->head->value;
 }
-int peek_back(const List_t* list, ErrorCode_t* err_status);
+int peek_back(const List_t* list, ErrorCode_t* err_status) {
+    *err_status = SUCCESS;
+
+    if (!list) {
+        *err_status = ERROR_LIST_NOT_EXIST;
+        return -1;
+    }
+
+    if (!(list->head)) {
+        *err_status = ERROR_LIST_IS_EMPTY;
+        return -1;
+    }
+
+    ListNode_t* curr = list->head;
+    while(curr->next) {
+        curr = curr->next;
+    }
+    
+    return curr->value;
+}
 
 size_t get_size(const List_t* list, ErrorCode_t* err_status) {
     *err_status = SUCCESS;
@@ -107,7 +126,30 @@ size_t get_size(const List_t* list, ErrorCode_t* err_status) {
     return list->size;
 }
 
-ErrorCode_t push_back(List_t* list, int value);
+ErrorCode_t push_back(List_t* list, int value) {
+    if (!list) return ERROR_LIST_NOT_EXIST;
+
+    ListNode_t* curr_node = list->head;
+    ListNode_t* prev_node = NULL;
+
+    while(curr_node) {
+        prev_node = curr_node;
+        curr_node = curr_node->next;
+    }
+
+    ListNode_t* node = calloc(1, sizeof(ListNode_t));
+    if (!node) return ERROR_HEAP_ALLOC_FAILED;
+    node->value = value;
+
+    if (prev_node) {
+        prev_node->next = node;
+    } else {
+        list->head = node;
+    }
+
+    return SUCCESS;
+}
+
 ErrorCode_t push_front(List_t* list, int value);
 
 int pop_front(List_t* list, ErrorCode_t* err_status);
