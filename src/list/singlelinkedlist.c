@@ -82,7 +82,7 @@ void destroy_list(List_t** list) {
 }
 
 int peek_front(const List_t* list, ErrorCode_t* err_status) {
-    err_status = SUCCESS;
+    *err_status = SUCCESS;
 
     if (!list) {
         *err_status = ERROR_LIST_NOT_EXIST;
