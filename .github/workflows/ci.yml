@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Normal tests (gcc + clang) for both backends
+          - cc: gcc
+            impl: sll
+            mode: test
+          - cc: gcc
+            impl: dll
+            mode: test
+          - cc: clang
+            impl: sll
+            mode: test
+          - cc: clang
+            impl: dll
+            mode: test
+
+          # Sanitizer tests (gcc + clang) for both backends
+          - cc: gcc
+            impl: sll
+            mode: sanitize
+          - cc: gcc
+            impl: dll
+            mode: sanitize
+          - cc: clang
+            impl: sll
+            mode: sanitize
+          - cc: clang
+            impl: dll
+            mode: sanitize
+
+          # Valgrind (gcc only) for both backends
+          - cc: gcc
+            impl: sll
+            mode: valgrind
+          - cc: gcc
+            impl: dll
+            mode: valgrind
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential clang valgrind
+
+      - name: Build and run
+        env:
+          CC: ${{ matrix.cc }}
+        run: |
+          make clean
+
+          if [ "${{ matrix.mode }}" = "sanitize" ]; then
+            make sanitize LIST_IMPL=${{ matrix.impl }}
+
+          elif [ "${{ matrix.mode }}" = "valgrind" ]; then
+            # Build the test binary (do NOT run it normally)
+            make bin/tests_${{ matrix.impl }} LIST_IMPL=${{ matrix.impl }}
+
+            # Run under Valgrind:
+            # --leak-check=full: report leaks
+            # --errors-for-leak-kinds=all: treat all leak kinds as errors
+            # --error-exitcode=1: fail CI on any Valgrind error/leak
+            valgrind \
+              --leak-check=full \
+              --errors-for-leak-kinds=all \
+              --error-exitcode=1 \
+              ./bin/tests_${{ matrix.impl }}
+
+          else
+            make test LIST_IMPL=${{ matrix.impl }}
+          fi
