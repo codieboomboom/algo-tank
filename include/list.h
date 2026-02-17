@@ -19,7 +19,7 @@ typedef enum Order{
     TAIL_TO_HEAD,
 } Order_t;
 
-List_t *init_list();
+List_t *init_list(void);
 
 List_t *create_list(const int* elements, size_t nmemb);
 

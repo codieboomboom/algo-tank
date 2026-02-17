@@ -56,7 +56,7 @@ List_t* create_list(const int* elements, size_t nmemb) {
     return list;
 }
 
-List_t* init_list() {
+List_t* init_list(void) {
     // Init the list empty
     List_t* list = malloc(sizeof(List_t));
     if(!list) return NULL;

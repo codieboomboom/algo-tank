@@ -13,7 +13,7 @@ struct List {
     size_t size;
 };
 
-List_t *init_list() {
+List_t *init_list(void) {
     List_t *list = calloc(1, sizeof(List_t));
     if (!list) return NULL;
     return list;
