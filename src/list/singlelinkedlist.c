@@ -81,31 +81,31 @@ void destroy_list(List_t** list) {
     return;
 }
 
-int peek_front(const List_t* list, ErrorCode_t* err_status) {
-    *err_status = SUCCESS;
+int peek_front(const List_t* list, ListError_t* err_status) {
+    *err_status = LIST_SUCCESS;
 
     if (!list) {
-        *err_status = ERROR_LIST_NOT_EXIST;
+        *err_status = LIST_ERROR_NOT_EXIST;
         return -1;
     }
 
     if (!(list->head)) {
-        *err_status = ERROR_LIST_IS_EMPTY; // cannot peek
+        *err_status = LIST_ERROR_EMPTY; // cannot peek
         return -1;
     }
 
     return list->head->value;
 }
-int peek_back(const List_t* list, ErrorCode_t* err_status) {
-    *err_status = SUCCESS;
+int peek_back(const List_t* list, ListError_t* err_status) {
+    *err_status = LIST_SUCCESS;
 
     if (!list) {
-        *err_status = ERROR_LIST_NOT_EXIST;
+        *err_status = LIST_ERROR_NOT_EXIST;
         return -1;
     }
 
     if (!(list->head)) {
-        *err_status = ERROR_LIST_IS_EMPTY;
+        *err_status = LIST_ERROR_EMPTY;
         return -1;
     }
 
@@ -117,17 +117,17 @@ int peek_back(const List_t* list, ErrorCode_t* err_status) {
     return curr->value;
 }
 
-size_t get_size(const List_t* list, ErrorCode_t* err_status) {
-    *err_status = SUCCESS;
+size_t get_size(const List_t* list, ListError_t* err_status) {
+    *err_status = LIST_SUCCESS;
     if (!list) {
-        *err_status = ERROR_LIST_NOT_EXIST;
+        *err_status = LIST_ERROR_NOT_EXIST;
         return 0;
     }
     return list->size;
 }
 
-ErrorCode_t push_back(List_t* list, int value) {
-    if (!list) return ERROR_LIST_NOT_EXIST;
+ListError_t push_back(List_t* list, int value) {
+    if (!list) return LIST_ERROR_NOT_EXIST;
 
     ListNode_t* curr_node = list->head;
     ListNode_t* prev_node = NULL;
@@ -138,7 +138,7 @@ ErrorCode_t push_back(List_t* list, int value) {
     }
 
     ListNode_t* node = calloc(1, sizeof(ListNode_t));
-    if (!node) return ERROR_HEAP_ALLOC_FAILED;
+    if (!node) return LIST_ERROR_ALLOC_FAILED;
     node->value = value;
 
     if (prev_node) {
@@ -149,15 +149,15 @@ ErrorCode_t push_back(List_t* list, int value) {
 
     list->size++;
 
-    return SUCCESS;
+    return LIST_SUCCESS;
 }
 
-ErrorCode_t push_front(List_t* list, int value) {
-    if (!list) return ERROR_LIST_NOT_EXIST;
+ListError_t push_front(List_t* list, int value) {
+    if (!list) return LIST_ERROR_NOT_EXIST;
 
     ListNode_t* node = calloc(1, sizeof(ListNode_t));
     if (!node) {
-        return ERROR_HEAP_ALLOC_FAILED;
+        return LIST_ERROR_ALLOC_FAILED;
     }
     node->value = value;
     node->next = list->head;
@@ -165,19 +165,19 @@ ErrorCode_t push_front(List_t* list, int value) {
 
     list->size++;
 
-    return SUCCESS;
+    return LIST_SUCCESS;
 }
 
-int pop_front(List_t* list, ErrorCode_t* err_status) {
-    *err_status = SUCCESS;
+int pop_front(List_t* list, ListError_t* err_status) {
+    *err_status = LIST_SUCCESS;
 
     if (!list) {
-        *err_status = ERROR_LIST_NOT_EXIST;
+        *err_status = LIST_ERROR_NOT_EXIST;
         return -1;
     }
 
     if (!(list->head)) {
-        *err_status = ERROR_LIST_IS_EMPTY;
+        *err_status = LIST_ERROR_EMPTY;
         return -1;
     }
 
@@ -195,16 +195,16 @@ int pop_front(List_t* list, ErrorCode_t* err_status) {
     return value;
 }
 
-int pop_back(List_t* list, ErrorCode_t* err_status) {
-    *err_status = SUCCESS;
+int pop_back(List_t* list, ListError_t* err_status) {
+    *err_status = LIST_SUCCESS;
 
     if (!list) {
-        *err_status = ERROR_LIST_NOT_EXIST;
+        *err_status = LIST_ERROR_NOT_EXIST;
         return -1;
     }
 
     if (!(list->head)) {
-        *err_status = ERROR_LIST_IS_EMPTY;
+        *err_status = LIST_ERROR_EMPTY;
         return -1;
     }
 

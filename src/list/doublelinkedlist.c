@@ -68,15 +68,15 @@ List_t* init_list(void) {
     return list;
 }
 
-ErrorCode_t push_back(List_t* list, int value) {
-    if(!list) return ERROR_LIST_NOT_EXIST;
+ListError_t push_back(List_t* list, int value) {
+    if(!list) return LIST_ERROR_NOT_EXIST;
 
     if ((list->head && !(list->tail)) || (!(list->head) && list->tail)) {
-        return ERROR_LIST_INCONSISTENT_PTR;
+        return LIST_ERROR_INCONSISTENT_PTR;
     }
 
     ListNode_t* node = malloc(sizeof(ListNode_t));
-    if (!node) return ERROR_HEAP_ALLOC_FAILED;
+    if (!node) return LIST_ERROR_ALLOC_FAILED;
 
     node->value = value;
     node->next = NULL;
@@ -91,18 +91,18 @@ ErrorCode_t push_back(List_t* list, int value) {
     list->tail = node;
     list->size++;
 
-    return SUCCESS;
+    return LIST_SUCCESS;
 }
 
-ErrorCode_t push_front(List_t* list, int value) {
-    if (!list) return ERROR_LIST_NOT_EXIST;
+ListError_t push_front(List_t* list, int value) {
+    if (!list) return LIST_ERROR_NOT_EXIST;
 
     if ((list->head && !(list->tail)) || (!(list->head) && list->tail)) {
-        return ERROR_LIST_INCONSISTENT_PTR;
+        return LIST_ERROR_INCONSISTENT_PTR;
     }
 
     ListNode_t* node = malloc(sizeof(ListNode_t));
-    if (!node) return ERROR_HEAP_ALLOC_FAILED;
+    if (!node) return LIST_ERROR_ALLOC_FAILED;
 
     node->value = value;
     node->prev = NULL;
@@ -118,21 +118,21 @@ ErrorCode_t push_front(List_t* list, int value) {
     list->head = node;
     list->size++;
 
-    return SUCCESS;
+    return LIST_SUCCESS;
 }
 
-int pop_front(List_t* list, ErrorCode_t* err_status) {
+int pop_front(List_t* list, ListError_t* err_status) {
     int popped_val;
     ListNode_t* next_head = NULL;
 
-    *err_status = SUCCESS; // default
+    *err_status = LIST_SUCCESS; // default
 
     if (!list) {
-        *err_status = ERROR_LIST_NOT_EXIST;
+        *err_status = LIST_ERROR_NOT_EXIST;
         return -1;
     }
     if (!(list->head) || !(list->tail) || list->size == 0) {
-        *err_status = ERROR_LIST_IS_EMPTY;
+        *err_status = LIST_ERROR_EMPTY;
         return -1;
     }
 
@@ -155,17 +155,17 @@ int pop_front(List_t* list, ErrorCode_t* err_status) {
     return popped_val;
 }
 
-int pop_back(List_t* list, ErrorCode_t* err_status) {
+int pop_back(List_t* list, ListError_t* err_status) {
     int popped_val;
     ListNode_t* next_tail = NULL;
 
-    *err_status = SUCCESS;
+    *err_status = LIST_SUCCESS;
     if(!list) {
-        *err_status = ERROR_LIST_NOT_EXIST;
+        *err_status = LIST_ERROR_NOT_EXIST;
         return -1;
     }
     if(!(list->head) || !(list->tail) || list->size == 0) {
-        *err_status = ERROR_LIST_IS_EMPTY;
+        *err_status = LIST_ERROR_EMPTY;
         return -1;
     }
 
@@ -187,37 +187,37 @@ int pop_back(List_t* list, ErrorCode_t* err_status) {
     return popped_val;
 }
 
-int peek_front(const List_t* list, ErrorCode_t* err_status) {
-    *err_status = SUCCESS;
+int peek_front(const List_t* list, ListError_t* err_status) {
+    *err_status = LIST_SUCCESS;
     if (!list) {
-        *err_status = ERROR_LIST_NOT_EXIST;
+        *err_status = LIST_ERROR_NOT_EXIST;
         return -1; // USER MUST CHECK
     }
     if (!(list->head)) {
-        *err_status = ERROR_LIST_IS_EMPTY;
+        *err_status = LIST_ERROR_EMPTY;
         return -1;
     }
     return list->head->value;
 }
 
-int peek_back(const List_t* list, ErrorCode_t* err_status) {
-    *err_status = SUCCESS;
+int peek_back(const List_t* list, ListError_t* err_status) {
+    *err_status = LIST_SUCCESS;
     if (!list) {
-        *err_status = ERROR_LIST_NOT_EXIST;
+        *err_status = LIST_ERROR_NOT_EXIST;
         return -1; // USER must check outside
     }
     if(!(list->tail)) {
-        *err_status = ERROR_LIST_IS_EMPTY;
+        *err_status = LIST_ERROR_EMPTY;
         return -1;
     }
     return list->tail->value;
 }
 
 // TODO: TEST
-size_t get_size(const List_t* list, ErrorCode_t* err_status) {
-    *err_status = SUCCESS;
+size_t get_size(const List_t* list, ListError_t* err_status) {
+    *err_status = LIST_SUCCESS;
     if (!list) {
-        *err_status = ERROR_LIST_NOT_EXIST;
+        *err_status = LIST_ERROR_NOT_EXIST;
         return 0;
     }
     return list->size;
