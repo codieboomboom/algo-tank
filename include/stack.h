@@ -13,9 +13,9 @@ typedef enum StackError {
     STACK_ALLOC_FAILED
 } StackError_t;
 
-Stack_t init_stack(void);
+Stack_t* init_stack(void);
 
-void destroy_stack(Stack_t* stack, StackError_t* err);
+void destroy_stack(Stack_t** stack);
 
 int peek(const Stack_t* stack, StackError_t* err);
 
