@@ -50,6 +50,19 @@ void destroy_stack(Stack_t** stack) {
     *stack = NULL;
 }
 
+int stack_peek(const Stack_t* stack, StackError_t* err) {
+    *err = STACK_SUCCESS;
+    if (!stack) {
+        *err = STACK_NOT_EXIST;
+        return -1;
+    }
+
+    ListError_t err_list;
+    int value = peek_back(stack->internal_list, &err_list); // top of stack is at the back
+    *err = convert_list_err_to_stack_err(err_list);
+    return value;
+}
+
 size_t stack_size(const Stack_t* stack, StackError_t* err) {
     *err = STACK_SUCCESS;
     if (!stack) {
@@ -61,4 +74,25 @@ size_t stack_size(const Stack_t* stack, StackError_t* err) {
     size_t nmemb = list_size(stack->internal_list, &err_list);
     *err = convert_list_err_to_stack_err(err_list);
     return nmemb;
+}
+
+StackError_t stack_push(Stack_t* stack, int value) {
+    if (!stack) {
+        return STACK_NOT_EXIST;
+    }
+
+    return convert_list_err_to_stack_err(push_back(stack->internal_list, value));
+}
+
+int stack_pop(Stack_t* stack, StackError_t* err){
+    *err = STACK_SUCCESS;
+    if (!stack) {
+        *err = STACK_NOT_EXIST;
+        return -1;
+    }
+
+    ListError_t err_list;
+    int value = pop_back(stack->internal_list, &err_list); // top of stack is at the back
+    *err = convert_list_err_to_stack_err(err_list);
+    return value;
 }
