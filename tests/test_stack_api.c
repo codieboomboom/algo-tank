@@ -86,7 +86,7 @@ void test_stack_peek_empty_stack(void) {
     printf("Test Case: test_stack_peek_empty_stack\n");
     Stack_t *stack = init_stack();
     StackError_t err = STACK_SUCCESS;
-    int v = stack_peek(stack, &err);
+    stack_peek(stack, &err);
     expect_stack_error(err, STACK_EMPTY);
     destroy_stack(&stack);
     return;
@@ -96,7 +96,7 @@ void test_stack_pop_empty_stack(void) {
     printf("Test Case: test_stack_pop_empty_stack\n");
     Stack_t *stack = init_stack();
     StackError_t err = STACK_SUCCESS;
-    int v = stack_pop(stack, &err);
+    stack_pop(stack, &err);
     expect_stack_error(err, STACK_EMPTY);
     destroy_stack(&stack);
     return;
@@ -106,7 +106,7 @@ void test_stack_peek_not_exist_stack(void) {
     printf("Test Case: test_stack_peek_not_exist_stack\n");
     Stack_t *stack = NULL;
     StackError_t err = STACK_SUCCESS;
-    int v = stack_peek(stack, &err);
+    stack_peek(stack, &err);
     expect_stack_error(err, STACK_NOT_EXIST);
 }
 
@@ -114,7 +114,7 @@ void test_stack_pop_not_exist_stack(void) {
     printf("Test Case: test_stack_pop_not_exist_stack\n");
     Stack_t *stack = NULL;
     StackError_t err = STACK_SUCCESS;
-    int v = stack_pop(stack, &err);
+    stack_pop(stack, &err);
     expect_stack_error(err, STACK_NOT_EXIST);
 }
 
@@ -129,7 +129,6 @@ void test_stack_get_size_null_stackptr(void) {
     printf("Test Case: test_stack_get_size_null_stackptr\n");
     Stack_t *stack = NULL;
     StackError_t err = STACK_SUCCESS;
-    size_t size = stack_size(stack, &err);
-
+    stack_size(stack, &err);
     expect_stack_error(err, STACK_NOT_EXIST); 
 }
