@@ -4,7 +4,7 @@
 /* Helper: assert size and SUCCESS */
 static void expect_size(List_t *list, size_t expected) {
     ListError_t err = LIST_SUCCESS;
-    size_t s = get_size(list, &err);
+    size_t s = list_size(list, &err);
     ASSERT_EQ_INT(err, LIST_SUCCESS);
     ASSERT_EQ_SIZE(s, expected);
 }

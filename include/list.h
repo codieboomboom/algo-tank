@@ -29,7 +29,7 @@ void destroy_list(List_t** list);
 
 int peek_front(const List_t* list, ListError_t* err_status);
 int peek_back(const List_t* list, ListError_t* err_status);
-size_t get_size(const List_t* list, ListError_t* err_status);
+size_t list_size(const List_t* list, ListError_t* err_status);
 
 ListError_t push_back(List_t* list, int value);
 ListError_t push_front(List_t* list, int value);

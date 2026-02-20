@@ -4,7 +4,7 @@
 /* Helper: assert size and SUCCESS */
 static void expect_size(Stack_t *stack, size_t expected) {
     StackError_t err = STACK_SUCCESS;
-    size_t s = get_size(stack, &err);
+    size_t s = stack_size(stack, &err);
     ASSERT_EQ_INT(err, STACK_SUCCESS);
     ASSERT_EQ_SIZE(s, expected);
 }
@@ -129,7 +129,7 @@ void test_stack_get_size_null_stackptr(void) {
     printf("Test Case: test_stack_get_size_null_stackptr\n");
     Stack_t *stack = NULL;
     StackError_t err = STACK_SUCCESS;
-    size_t stack_size = get_size(stack, &err);
+    size_t size = stack_size(stack, &err);
 
     expect_stack_error(err, STACK_NOT_EXIST); 
 }

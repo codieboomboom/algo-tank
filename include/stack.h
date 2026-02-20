@@ -19,7 +19,7 @@ void destroy_stack(Stack_t** stack);
 
 int peek(const Stack_t* stack, StackError_t* err);
 
-size_t get_size(const Stack_t* stack, StackError_t* err);
+size_t stack_size(const Stack_t* stack, StackError_t* err);
 
 StackError_t push(Stack_t* stack, int value);
 

@@ -214,7 +214,7 @@ int peek_back(const List_t* list, ListError_t* err_status) {
 }
 
 // TODO: TEST
-size_t get_size(const List_t* list, ListError_t* err_status) {
+size_t list_size(const List_t* list, ListError_t* err_status) {
     *err_status = LIST_SUCCESS;
     if (!list) {
         *err_status = LIST_ERROR_NOT_EXIST;
