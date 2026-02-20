@@ -12,7 +12,7 @@ static void expect_size(Stack_t *stack, size_t expected) {
 /* Helper: assert top values and SUCCESS */
 static void expect_top(Stack_t *stack, int expected) {
     StackError_t err = STACK_SUCCESS;
-    int v = peek_front(stack, &err);
+    int v = stack_peek(stack, &err);
     ASSERT_EQ_INT(err, STACK_SUCCESS);
     ASSERT_EQ_INT(v, expected);
 }
@@ -38,12 +38,12 @@ void test_stack_single_push_single_pop(void) {
     Stack_t *stack = init_stack();
     StackError_t err = STACK_SUCCESS;
 
-    err = push(stack, 1);
+    err = stack_push(stack, 1);
     ASSERT_EQ_INT(err, STACK_SUCCESS);
     expect_size(stack, 1);
     expect_top(stack, 1);
 
-    int v = pop(stack, &err);
+    int v = stack_pop(stack, &err);
     int expected = 1;
     ASSERT_EQ_INT(err, STACK_SUCCESS);
     ASSERT_EQ_INT(v, expected);
@@ -56,23 +56,23 @@ void test_stack_multiple_push_multiple_pop(void) {
     Stack_t *stack = init_stack();
     StackError_t err = STACK_SUCCESS;
 
-    err = push(stack, 1);
+    err = stack_push(stack, 1);
     ASSERT_EQ_INT(err, STACK_SUCCESS);
     expect_size(stack, 1);
     expect_top(stack, 1);
 
-    err = push(stack, 2);
+    err = stack_push(stack, 2);
     ASSERT_EQ_INT(err, STACK_SUCCESS);
     expect_size(stack, 2);
     expect_top(stack, 2);
 
-    int v = pop(stack, &err);
+    int v = stack_pop(stack, &err);
     int expected = 2;
     ASSERT_EQ_INT(err, STACK_SUCCESS);
     ASSERT_EQ_INT(v, expected);
     expect_size(stack, 1);
 
-    int v = pop(stack, &err);
+    int v = stack_pop(stack, &err);
     int expected = 1;
     ASSERT_EQ_INT(err, STACK_SUCCESS);
     ASSERT_EQ_INT(v, expected);
@@ -86,7 +86,7 @@ void test_stack_peek_empty_stack(void) {
     printf("Test Case: test_stack_peek_empty_stack\n");
     Stack_t *stack = init_stack();
     StackError_t err = STACK_SUCCESS;
-    int v = peek(stack, &err);
+    int v = stack_peek(stack, &err);
     expect_stack_error(err, STACK_EMPTY);
     destroy_stack(&stack);
     return;
@@ -96,7 +96,7 @@ void test_stack_pop_empty_stack(void) {
     printf("Test Case: test_stack_pop_empty_stack\n");
     Stack_t *stack = init_stack();
     StackError_t err = STACK_SUCCESS;
-    int v = pop(stack, &err);
+    int v = stack_pop(stack, &err);
     expect_stack_error(err, STACK_EMPTY);
     destroy_stack(&stack);
     return;
@@ -106,7 +106,7 @@ void test_stack_peek_not_exist_stack(void) {
     printf("Test Case: test_stack_peek_not_exist_stack\n");
     Stack_t *stack = NULL;
     StackError_t err = STACK_SUCCESS;
-    int v = peek(stack, &err);
+    int v = stack_peek(stack, &err);
     expect_stack_error(err, STACK_NOT_EXIST);
 }
 
@@ -114,14 +114,14 @@ void test_stack_pop_not_exist_stack(void) {
     printf("Test Case: test_stack_pop_not_exist_stack\n");
     Stack_t *stack = NULL;
     StackError_t err = STACK_SUCCESS;
-    int v = pop(stack, &err);
+    int v = stack_pop(stack, &err);
     expect_stack_error(err, STACK_NOT_EXIST);
 }
 
 void test_stack_push_not_exist_stack(void) {
     printf("Test Case: test_stack_push_not_exist_stack\n");
     Stack_t *stack = NULL;
-    StackError_t err = push(stack, 1);
+    StackError_t err = stack_push(stack, 1);
     expect_stack_error(err, STACK_NOT_EXIST);
 }
 

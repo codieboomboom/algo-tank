@@ -10,19 +10,20 @@ typedef enum StackError {
     STACK_NOT_IMPLEMENTED,
     STACK_NOT_EXIST,
     STACK_EMPTY,
-    STACK_ALLOC_FAILED
+    STACK_ALLOC_FAILED,
+    STACK_BAD_FORMAT,
 } StackError_t;
 
 Stack_t* init_stack(void);
 
 void destroy_stack(Stack_t** stack);
 
-int peek(const Stack_t* stack, StackError_t* err);
+int stack_peek(const Stack_t* stack, StackError_t* err);
 
 size_t stack_size(const Stack_t* stack, StackError_t* err);
 
-StackError_t push(Stack_t* stack, int value);
+StackError_t stack_push(Stack_t* stack, int value);
 
-int pop(Stack_t* stack, StackError_t* err);
+int stack_pop(Stack_t* stack, StackError_t* err);
 
 #endif
