@@ -72,8 +72,8 @@ void test_stack_multiple_push_multiple_pop(void) {
     ASSERT_EQ_INT(v, expected);
     expect_size(stack, 1);
 
-    int v = stack_pop(stack, &err);
-    int expected = 1;
+    v = stack_pop(stack, &err);
+    expected = 1;
     ASSERT_EQ_INT(err, STACK_SUCCESS);
     ASSERT_EQ_INT(v, expected);
     expect_size(stack, 0);
