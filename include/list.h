@@ -27,16 +27,16 @@ void clear_list(List_t* list);
 
 void destroy_list(List_t** list);
 
-int peek_front(const List_t* list, ListError_t* err_status);
-int peek_back(const List_t* list, ListError_t* err_status);
+int list_peek_front(const List_t* list, ListError_t* err_status);
+int list_peek_back(const List_t* list, ListError_t* err_status);
 size_t list_size(const List_t* list, ListError_t* err_status);
 
 ListError_t push_back(List_t* list, int value);
 ListError_t push_front(List_t* list, int value);
 
-int pop_front(List_t* list, ListError_t* err_status);
-int pop_back(List_t* list, ListError_t* err_status);
+int list_pop_front(List_t* list, ListError_t* err_status);
+int list_pop_back(List_t* list, ListError_t* err_status);
 
-void print(const List_t* list, Order_t order);
+void print_list(const List_t* list, Order_t order);
 
 #endif

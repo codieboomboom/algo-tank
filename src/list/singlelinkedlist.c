@@ -81,7 +81,7 @@ void destroy_list(List_t** list) {
     return;
 }
 
-int peek_front(const List_t* list, ListError_t* err_status) {
+int list_peek_front(const List_t* list, ListError_t* err_status) {
     *err_status = LIST_SUCCESS;
 
     if (!list) {
@@ -96,7 +96,7 @@ int peek_front(const List_t* list, ListError_t* err_status) {
 
     return list->head->value;
 }
-int peek_back(const List_t* list, ListError_t* err_status) {
+int list_peek_back(const List_t* list, ListError_t* err_status) {
     *err_status = LIST_SUCCESS;
 
     if (!list) {
@@ -168,7 +168,7 @@ ListError_t push_front(List_t* list, int value) {
     return LIST_SUCCESS;
 }
 
-int pop_front(List_t* list, ListError_t* err_status) {
+int list_pop_front(List_t* list, ListError_t* err_status) {
     *err_status = LIST_SUCCESS;
 
     if (!list) {
@@ -195,7 +195,7 @@ int pop_front(List_t* list, ListError_t* err_status) {
     return value;
 }
 
-int pop_back(List_t* list, ListError_t* err_status) {
+int list_pop_back(List_t* list, ListError_t* err_status) {
     *err_status = LIST_SUCCESS;
 
     if (!list) {
@@ -231,7 +231,7 @@ int pop_back(List_t* list, ListError_t* err_status) {
     return value;
 }
 
-void print(const List_t* list, Order_t order) {
+void print_list(const List_t* list, Order_t order) {
     if (order == TAIL_TO_HEAD) {
         printf("Tail To Head Order not supported!\n");
         return;

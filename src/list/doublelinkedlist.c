@@ -121,7 +121,7 @@ ListError_t push_front(List_t* list, int value) {
     return LIST_SUCCESS;
 }
 
-int pop_front(List_t* list, ListError_t* err_status) {
+int list_pop_front(List_t* list, ListError_t* err_status) {
     int popped_val;
     ListNode_t* next_head = NULL;
 
@@ -155,7 +155,7 @@ int pop_front(List_t* list, ListError_t* err_status) {
     return popped_val;
 }
 
-int pop_back(List_t* list, ListError_t* err_status) {
+int list_pop_back(List_t* list, ListError_t* err_status) {
     int popped_val;
     ListNode_t* next_tail = NULL;
 
@@ -187,7 +187,7 @@ int pop_back(List_t* list, ListError_t* err_status) {
     return popped_val;
 }
 
-int peek_front(const List_t* list, ListError_t* err_status) {
+int list_peek_front(const List_t* list, ListError_t* err_status) {
     *err_status = LIST_SUCCESS;
     if (!list) {
         *err_status = LIST_ERROR_NOT_EXIST;
@@ -200,7 +200,7 @@ int peek_front(const List_t* list, ListError_t* err_status) {
     return list->head->value;
 }
 
-int peek_back(const List_t* list, ListError_t* err_status) {
+int list_peek_back(const List_t* list, ListError_t* err_status) {
     *err_status = LIST_SUCCESS;
     if (!list) {
         *err_status = LIST_ERROR_NOT_EXIST;
@@ -260,7 +260,7 @@ void destroy_list(List_t** list){
     return;
 }
 
-void print(const List_t* list, Order_t order) {
+void print_list(const List_t* list, Order_t order) {
     if(!list) return; // GUARD IMPORTANT, otherwise list->head might be attempted, invalid...
 
     ListNode_t* curr_node = NULL;

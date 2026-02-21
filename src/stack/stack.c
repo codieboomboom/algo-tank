@@ -58,7 +58,7 @@ int stack_peek(const Stack_t* stack, StackError_t* err) {
     }
 
     ListError_t err_list;
-    int value = peek_back(stack->internal_list, &err_list); // top of stack is at the back
+    int value = list_peek_back(stack->internal_list, &err_list); // top of stack is at the back
     *err = convert_list_err_to_stack_err(err_list);
     return value;
 }
@@ -92,7 +92,7 @@ int stack_pop(Stack_t* stack, StackError_t* err){
     }
 
     ListError_t err_list;
-    int value = pop_back(stack->internal_list, &err_list); // top of stack is at the back
+    int value = list_pop_back(stack->internal_list, &err_list); // top of stack is at the back
     *err = convert_list_err_to_stack_err(err_list);
     return value;
 }
