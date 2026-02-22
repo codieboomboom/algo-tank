@@ -175,3 +175,9 @@ void test_list_push_front_clear_reuse_pop_front(void) {
     destroy_list(&list);
     ASSERT_NULL(list);
 }
+
+void list_tests(void) {
+    test_list_create_print_destroy();
+    test_list_push_back_peek_pop_back();
+    test_list_push_front_clear_reuse_pop_front();
+}

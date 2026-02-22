@@ -132,3 +132,16 @@ void test_stack_get_size_null_stackptr(void) {
     stack_size(stack, &err);
     expect_stack_error(err, STACK_NOT_EXIST); 
 }
+
+// Collect all stack tests and run
+void stack_tests(void) {
+    test_stack_init_and_destroy();
+    test_stack_single_push_single_pop();
+    test_stack_multiple_push_multiple_pop();
+    test_stack_peek_empty_stack();
+    test_stack_pop_empty_stack();
+    test_stack_peek_not_exist_stack();
+    test_stack_pop_not_exist_stack();
+    test_stack_push_not_exist_stack();
+    test_stack_get_size_null_stackptr();
+}
