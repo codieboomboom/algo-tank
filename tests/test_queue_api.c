@@ -31,6 +31,64 @@ void test_q_init_and_destroy(void) {
     ASSERT_NULL(q);
 }
 
+void test_q_enqueue_and_dequeue(void) {
+    printf("Test Case: test_q_enqueue_and_dequeue\n");
+
+}
+
+void test_multiple_enqueue_and_dequeue(void) {
+    printf("Test Case: test_multiple_enqueue_and_dequeue\n");
+}
+
+void test_enqueue_not_exist_queue(void) {
+    printf("Test Case: test_enqueue_not_exist_queue\n");
+    Queue_t* q = NULL;
+    QueueError_t q_err = q_enqueue(q, 1);
+    expect_q_error(q_err, QUEUE_NOT_EXIST);
+}
+
+void test_dequeue_not_exist_queue(void) {
+    printf("Test Case: test_dequeue_not_exist_queue\n");
+    Queue_t* q = NULL;
+    QueueError_t q_err = QUEUE_SUCCESS;
+    q_dequeue(q, &q_err);
+    expect_q_error(q_err, QUEUE_NOT_EXIST);
+}
+
+void test_dequeue_empty_queue(void) {
+    printf("Test Case: test_dequeue_empty_queue\n");
+    Queue_t* q = init_queue();
+    QueueError_t q_err = QUEUE_SUCCESS;
+    q_front(q, &q_err);
+    expect_q_error(q_err, QUEUE_EMPTY);
+    destroy_queue(&q);
+}
+
+void test_front_not_exist_queue(void) {
+    printf("Test Case: test_front_not_exist_queue\n");
+    Queue_t* q = NULL;
+    QueueError_t q_err = QUEUE_SUCCESS;
+    q_front(q, &q_err);
+    expect_q_error(q_err, QUEUE_NOT_EXIST);
+}
+
+void test_front_empty_queue(void) {
+    printf("Test Case: test_front_empty_queue\n");
+    Queue_t* q = init_queue();
+    QueueError_t q_err = QUEUE_SUCCESS;
+    q_front(q, &q_err);
+    expect_q_error(q_err, QUEUE_EMPTY);
+    destroy_queue(&q);
+}
+
+void test_queue_size_not_exist_queue(void) {
+    printf("Test Case: test_queue_size_not_exist_queue\n");
+    Queue_t* q = NULL;
+    QueueError_t q_err = QUEUE_SUCCESS;
+    q_size(q, &q_err);
+    expect_q_error(q_err, QUEUE_NOT_EXIST);
+}
+
 void queue_tests(void) {
     test_q_init_and_destroy();
 }
