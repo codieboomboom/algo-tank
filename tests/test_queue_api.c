@@ -33,11 +33,59 @@ void test_q_init_and_destroy(void) {
 
 void test_q_enqueue_and_dequeue(void) {
     printf("Test Case: test_q_enqueue_and_dequeue\n");
+    Queue_t* q = init_queue();
+    QueueError_t q_err = QUEUE_SUCCESS;
+    int v;
+    int expected;
 
+    q_err = q_enqueue(q, 1);
+    ASSERT_EQ_INT(q_err, QUEUE_SUCCESS);
+    expect_size(q, 1);
+    expect_q_front(q, 1);
+
+    expected = 1;
+
+    v = q_dequeue(q, &q_err);
+    ASSERT_EQ_INT(q_err, QUEUE_SUCCESS);
+    ASSERT_EQ_INT(v, expected);
+    expect_size(q, 0);
+
+    destroy_queue(&q);
 }
 
 void test_multiple_enqueue_and_dequeue(void) {
     printf("Test Case: test_multiple_enqueue_and_dequeue\n");
+    Queue_t* q = init_queue();
+    QueueError_t q_err = QUEUE_SUCCESS;
+
+    int v;
+    int expected;
+
+    q_err = q_enqueue(q, 1);
+    ASSERT_EQ_INT(q_err, QUEUE_SUCCESS);
+    expect_size(q, 1);
+    expect_q_front(q, 1);
+
+    q_err = q_enqueue(q, 2);
+    ASSERT_EQ_INT(q_err, QUEUE_SUCCESS);
+    expect_size(q, 2);
+    expect_q_front(q, 1);
+
+    expected = 1;
+
+    v = q_dequeue(q, &q_err);
+    ASSERT_EQ_INT(q_err, QUEUE_SUCCESS);
+    ASSERT_EQ_INT(v, expected);
+    expect_size(q, 1);
+
+    expected = 2;
+
+    v = q_dequeue(q, &q_err);
+    ASSERT_EQ_INT(q_err, QUEUE_SUCCESS);
+    ASSERT_EQ_INT(v, expected);
+    expect_size(q, 0);
+
+    destroy_queue(&q);
 }
 
 void test_enqueue_not_exist_queue(void) {
