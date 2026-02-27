@@ -30,9 +30,25 @@ static QueueError_t convert_list_err_to_q_err(ListError_t list_err) {
     return q_err;
 }
 
-Queue_t* init_queue(void);
+Queue_t* init_queue(void) {
+    List_t* list = init_list();
+    if (!list) return NULL; // Failed to alloc a list
 
-void destroy_queue(Queue_t** queue);
+    Queue_t* q = calloc(1, sizeof(Queue_t));
+    if (!q) return NULL;
+
+    q->_list = list;
+    return q;
+}
+
+void destroy_queue(Queue_t** queue) {
+    if (!queue || !(*queue)) {
+        return; // TODO: What if the above guard is missing, as we are deref below
+    }
+    destroy_list((*queue)->_list);
+    free(*queue);
+    *queue = NULL;
+}
 
 QueueError_t q_enqueue(Queue_t* queue, int value);
 
