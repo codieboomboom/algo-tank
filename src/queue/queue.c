@@ -50,10 +50,27 @@ void destroy_queue(Queue_t** queue) {
     *queue = NULL;
 }
 
-QueueError_t q_enqueue(Queue_t* queue, int value);
+QueueError_t q_enqueue(Queue_t* queue, int value) {
+    if (!queue) return QUEUE_NOT_EXIST;
+    ListError_t _list_err = push_back(queue->_list, value);
+
+    return convert_list_err_to_q_err(_list_err);
+}
 
 int q_dequeue(Queue_t* queue, QueueError_t* q_err);
 
 int q_front(const Queue_t* queue, QueueError_t* q_err);
 
-size_t q_size(const Queue_t* queue, QueueError_t* q_err);
+size_t q_size(const Queue_t* queue, QueueError_t* q_err) {
+    *q_err = QUEUE_SUCCESS;
+
+    if (!queue || !(queue->_list)) {
+        *q_err = QUEUE_NOT_EXIST;
+        return 0;
+    }
+
+    ListError_t _list_err = LIST_SUCCESS;
+    size_t nmemb = list_size(queue->_list, &_list_err);
+    *q_err = convert_list_err_to_q_err(_list_err);
+    return nmemb;
+}
