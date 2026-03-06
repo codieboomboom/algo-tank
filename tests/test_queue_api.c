@@ -137,6 +137,12 @@ void test_queue_size_not_exist_queue(void) {
     expect_q_error(q_err, QUEUE_NOT_EXIST);
 }
 
+void test_destroy_not_exist_queue(void) {
+    printf("Test Case: test_destroy_not_exist_queue\n");
+    Queue_t* q = NULL;
+    destroy_queue(&q);
+}
+
 void queue_tests(void) {
     test_q_init_and_destroy();
 }

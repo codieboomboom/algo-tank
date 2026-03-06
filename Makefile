@@ -15,7 +15,7 @@ QUEUE_SRC := src/queue/queue.c
 TEST_SRC := tests/test_runner.c tests/test_list_api.c tests/test_stack_api.c tests/test_queue_api.c
 
 # All production sources that must be linked into tests
-SRC := $(LIST_SRC) $(STACK_SRC)
+SRC := $(LIST_SRC) $(STACK_SRC) $(QUEUE_SRC)
 
 # Output Directories
 BIN_DIR := bin

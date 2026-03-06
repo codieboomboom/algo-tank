@@ -45,7 +45,7 @@ void destroy_queue(Queue_t** queue) {
     if (!queue || !(*queue)) {
         return; // TODO: What if the above guard is missing, as we are deref below
     }
-    destroy_list((*queue)->_list);
+    destroy_list(&((*queue)->_list));
     free(*queue);
     *queue = NULL;
 }
@@ -57,9 +57,19 @@ QueueError_t q_enqueue(Queue_t* queue, int value) {
     return convert_list_err_to_q_err(_list_err);
 }
 
-int q_dequeue(Queue_t* queue, QueueError_t* q_err);
+int q_dequeue(Queue_t* queue, QueueError_t* q_err) {
+    ListError_t _list_err = LIST_SUCCESS;
+    int value = list_pop_front(queue->_list, &_list_err);
+    *q_err = convert_list_err_to_q_err(_list_err);
+    return value;
+}
 
-int q_front(const Queue_t* queue, QueueError_t* q_err);
+int q_front(const Queue_t* queue, QueueError_t* q_err) {
+    ListError_t _list_err = LIST_SUCCESS;
+    int value = list_peek_front(queue->_list, &_list_err);
+    *q_err = convert_list_err_to_q_err(_list_err);
+    return value;
+}
 
 size_t q_size(const Queue_t* queue, QueueError_t* q_err) {
     *q_err = QUEUE_SUCCESS;
